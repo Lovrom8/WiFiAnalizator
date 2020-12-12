@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GlavniProzor</class>
+ <widget class="QMainWindow" name="GlavniProzor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>656</width>
+    <height>335</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>WiFi Analizator</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="btnPostaviUMonitorski">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>240</y>
+      <width>201</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Postavi u monitorski način</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>101</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Bežična sučelja</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="qtTableSucelja">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>621</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>true</bool>
+    </attribute>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>656</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuWifiAnalizator">
+    <property name="title">
+     <string>WifiAnalizator</string>
+    </property>
+   </widget>
+   <addaction name="menuWifiAnalizator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
