@@ -9,16 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    Citac.cpp \
     GlavniProzor.cpp \
     WiFiAnaliza.cpp \
     WifiSucelja.cpp \
     main.cpp
 
 HEADERS += \
+    Citac.hpp \
     GlavniProzor.hpp \
     WiFiAnaliza.h \
+    WiFiZaglavlja.hpp \
     WifiSucelja.hpp \
-    list.h \
     nl80211.h
 
 FORMS += \

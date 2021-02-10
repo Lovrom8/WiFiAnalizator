@@ -1,5 +1,5 @@
 # WiFiAnalizator
 
 - QT aplikacija (C++)
-- za Linux 
+- Linux 
 - analiza mrežnog prometa uz pomoć monitorskog načina rada

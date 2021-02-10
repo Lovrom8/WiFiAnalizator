@@ -1,6 +1,7 @@
 #include "GlavniProzor.hpp"
 #include "WiFiAnaliza.h"
 #include "ui_glavniprozor.h"
+#include "Citac.hpp"
 
 GlavniProzor::GlavniProzor(QWidget *parent) : QMainWindow(parent), ui(new Ui::GlavniProzor)
 {
@@ -40,14 +41,16 @@ void GlavniProzor::StaviUMonitorski_Klik(){
    // if(msgBox.clickedButton() != btnYes )
     //    return;
 
-    if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
+    Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
+
+    /*if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
         QMessageBox::warning(this, tr("Greška"),
                              tr("Nije bilo moguće staviti adapter u monitorski način!"));
         return;
     }else{
         QMessageBox::warning(this, tr("Uspjeph"),
                              tr("Adapter je postavljen u monitorski način rada!"));
-    }
+    }*/
 
    // WiFiAnaliza *analiza = new WiFiAnaliza();
    // analiza->show();
