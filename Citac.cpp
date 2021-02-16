@@ -65,14 +65,104 @@ namespace Citac {
             qDebug() << "Nepoznata vrsta paketa";
     }
 
+    struct radiotap_hdr {
+        u_int8_t version;
+        u_int8_t pad;
+        u_int16_t length;
+        u_int32_t present_flags;
+    };
+
+    enum PresentFlags{
+        TSFT, // 8
+        Flags, //1B
+        Rate, //1B
+        Channel, //2B
+        FHSS, //1B
+        dBmAntennaSignal, //1B
+        dBmAntennaNoise, //1B
+        LockQuality, //2B
+        TXAttenuation, //2B
+        dBTXAttenuation, //2B
+        dBmTXPower, //1B
+        Antenna, //1B
+        dBAntennaSignal, //1B
+        dBAntennaNoise, //1B
+        RXFlags, //2B
+        TXFlags, //2B
+        ChannelPlus,
+        MCSInformation,
+        AMPDU,
+        VHT,
+        Timestamp,
+        HEInfo,
+        HEMU,
+        LengthPSDU,
+        LSIG,
+        TLVs,
+        RT_NS,
+        V_NS,
+        Ext //1b
+    };
+
+    short RT_Velicine[30] = {8, 1, 1, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2};
+
+
+    bool ImaExt(int presentZastavice){ // Provjera postoji li više Present zastavica
+        return presentZastavice & (1<<31);
+    }
+
+    void InterpretirajRT(char* paket){
+        auto hdr = reinterpret_cast<radiotap_hdr*>(paket);
+
+        unsigned int zastavice;
+        int trenZastavica = 0;
+
+        paket += 4; // Preskočimo do početka zastavica
+
+        char *paketPom = paket;
+
+        do{
+            unsigned int* zastavice_ = reinterpret_cast<unsigned int*>(paketPom);
+            zastavice = *zastavice_;
+            paketPom += 4; // Pomakni do sljedećeg ili zastavice ili početka polja s podatcima
+        }while(ImaExt(zastavice));
+
+        unsigned int* zastavice_ = reinterpret_cast<unsigned int*>(paketPom);
+        zastavice = *zastavice_;
+        qDebug() << "Prvi bajt podataka: " << QString::number(*paketPom, 16);
+
+        paket = paketPom;
+        while(zastavice > 0){
+            if((zastavice & 1) == 1){
+                unsigned char tren = *paket;
+                qDebug() << QString::number(tren, 16);
+                qDebug() << "Pomak: " << RT_Velicine[trenZastavica];
+                paket += RT_Velicine[trenZastavica];
+            }else{
+
+            }
+
+            trenZastavica++;
+            //qDebug() << QString::number(paket[i], 16);
+            zastavice >>= 1;
+        }
+
+
+    }
+
     void ProcesirajPaket(int len, char* paket){
-        for(int i = 0; i < 26;i++)
-                    qDebug() << QString::number(paket[i], 16);
+        //for(int i = 0; i < 26;i++)
+        //            qDebug() << QString::number(paket[i], 16);
 
-        unsigned char signal = paket[20];
-        qDebug() << "Snaga signala" << QString::number(signal, 2);;
+        //unsigned char signal = paket[20];
+        //qDebug() << "Snaga signala" << QString::number(signal, 2);
 
-        //Prvih 26 bajtova je RADIOTAP HEADER
+        radiotap_hdr* rt_hdr = reinterpret_cast<radiotap_hdr*>(paket);
+        qDebug() << "RT duljina: " << rt_hdr->length;
+
+        InterpretirajRT(paket);
+
+        //Prvih 26 bajtova je RADIOTAP HEADER (bar za ovaj adapter)
         paket = paket + 26;
 
         //zaglavlje* hdr = reinterpret_cast<zaglavlje*>(paket);
@@ -84,9 +174,7 @@ namespace Citac {
         unsigned char frameControlPrviBajt = paket[0]; // protocol version (b0 i b1), type (b2 i b3), subtype (b4,5,6 i 7)
         unsigned char frameControlDrugiBajt = paket[1];
 
-        //frameControlPrviBajt = BitExtract(paket[0], 0, 8);
-
-        qDebug() << QString::number(frameControlPrviBajt, 2);
+        qDebug() << "Prvi FC bajt:" << QString::number(frameControlPrviBajt, 2);
         //qDebug() << QString::number(frameControlDrugiBajt, 2);
 
         //npr. za Probe response (50 00)
