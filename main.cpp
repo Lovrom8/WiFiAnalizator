@@ -1,4 +1,4 @@
-#include "GlavniProzor.hpp"
+#include "ProzorGlavni.hpp"
 
 #include <QApplication>
 

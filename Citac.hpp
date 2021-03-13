@@ -12,6 +12,9 @@
 #include <string>
 #include <thread>
 #include <chrono>
+#include <mutex>
+#include <Cvor.hpp>
+#include <Okvir.hpp>
 
 #include <QDebug>
 
@@ -21,4 +24,8 @@ namespace Citac {
     int OtvoriSoket(std::string nazivSucelja);
     void PokreniCitanjePrometa(std::string nazivSucelja);
     void UgasiCitanjePrometa(std::string nazivSucelja);
+    QList<Cvor> DohvatiSveCvorove();
+
+    //std::mutex mtx;
+    inline QList<Okvir> okviri;
 }

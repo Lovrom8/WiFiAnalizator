@@ -41,29 +41,69 @@ namespace Citac {
 
     std::map<unsigned char, std::string> TipoviPaketa
     {
-        {0b00000000, "Association Request"},
-        {0b00010000, "Association Response"},
-        {0b00100000, "Reassociation Request"},
-        {0b00110000, "Reassociation Response"},
-        {0b01000000, "Probe Request"},
-        {0b01010000, "Probe Response"},
-        {0b01100000, "Timing Advertisment"},
-        {0b10000000, "Beacon"},
-        {0b10110000, "Authentication"},
-        {0b11000000, "Deauthentication"},
-        {0b10010100, "Block ACK"},
-        {0b11000100, "CTS"},
-        {0b10110100, "RTS"},
-        {0b11010100, "ACK"},
-        {0b11001000, "QOS Null"}
+        {0b00000000, "Association Request (Management)"},
+        {0b00010000, "Association Response (Management)"},
+        {0b00100000, "Reassociation Request (Management)"},
+        {0b00110000, "Reassociation Response (Management)"},
+        {0b01000000, "Probe Request (Management)"},
+        {0b01010000, "Probe Response (Management)"},
+        {0b01100000, "Timing Advertisment (Management)"},
+        {0b10000000, "Beacon (Management)"},
+        {0b10110000, "Authentication (Management)"},
+        {0b11000000, "Deauthentication (Management)"},
+        {0b10010100, "Block ACK (Control)"},
+        {0b11000100, "CTS (Control)"},
+        {0b10110100, "RTS (Control)"},
+        {0b11010100, "ACK (Control)"},
+        {0b11001000, "QOS Null (Control)"}
     };
 
-    void OdrediTip(unsigned char fcPrviBajt){
+    std::string OdrediTip(unsigned char fcPrviBajt){
+        std::string vrsta;
+
         if(TipoviPaketa.count(fcPrviBajt) > 0)
-            qDebug() << TipoviPaketa[fcPrviBajt].c_str();
+            vrsta = TipoviPaketa[fcPrviBajt].c_str();
         else
-            qDebug() << "Nepoznata vrsta paketa";
+            vrsta = "Nepoznata vrsta paketa";
+
+         qDebug() << vrsta.c_str();
+
+         return vrsta;
     }
+
+    enum PresentFlags{
+        TSFT, // 8 0
+        Flags, //1B 1
+        Rate, //1B 2
+        Channel, //2B 3
+        FHSS, //1B 4
+        dBmAntennaSignal, //1B 5
+        dBmAntennaNoise, //1B 6
+        LockQuality, //2B 7
+        TXAttenuation, //2B 8
+        dBTXAttenuation, //2B 9
+        dBmTXPower, //1B 10
+        Antenna, //1B 11
+        dBAntennaSignal, //1B 12
+        dBAntennaNoise, //1B 13
+        RXFlags, //2B 14
+        TXFlags, //2B 15
+        ChannelPlus, //16
+        MCSInformation, //17
+        AMPDU, //18
+        VHT, //19
+        Timestamp, //20
+        HEInfo, //21
+        HEMU, //22
+        LengthPSDU, //23
+        LSIG, //24
+        TLVs, //25
+        RT_NS, //8B ??? //26
+        V_NS, //3B //27
+        Ext //0 - pomak za 4B
+    };
+                                                                            //16
+    char RT_Velicine[32] = {8, 1, 1, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2, 0, 0, 0, 0, 0, 0,0,0,0,0,0,0,0,0,3,0};
 
     struct radiotap_hdr {
         u_int8_t version;
@@ -71,41 +111,6 @@ namespace Citac {
         u_int16_t length;
         u_int32_t present_flags;
     };
-
-    enum PresentFlags{
-        TSFT, // 8
-        Flags, //1B
-        Rate, //1B
-        Channel, //2B
-        FHSS, //1B
-        dBmAntennaSignal, //1B
-        dBmAntennaNoise, //1B
-        LockQuality, //2B
-        TXAttenuation, //2B
-        dBTXAttenuation, //2B
-        dBmTXPower, //1B
-        Antenna, //1B
-        dBAntennaSignal, //1B
-        dBAntennaNoise, //1B
-        RXFlags, //2B
-        TXFlags, //2B
-        ChannelPlus,
-        MCSInformation,
-        AMPDU,
-        VHT,
-        Timestamp,
-        HEInfo,
-        HEMU,
-        LengthPSDU,
-        LSIG,
-        TLVs,
-        RT_NS,
-        V_NS,
-        Ext //1b
-    };
-
-    short RT_Velicine[30] = {8, 1, 1, 2, 1, 1, 1, 2, 2, 2, 1, 1, 1, 1, 2, 2};
-
 
     bool ImaExt(int presentZastavice){ // Provjera postoji li više Present zastavica
         return presentZastavice & (1<<31);
@@ -124,19 +129,26 @@ namespace Citac {
         do{
             unsigned int* zastavice_ = reinterpret_cast<unsigned int*>(paketPom);
             zastavice = *zastavice_;
-            paketPom += 4; // Pomakni do sljedećeg ili zastavice ili početka polja s podatcima
+            paketPom += 4; // Pomakni do sljedeće ili zastavice ili početka polja s podatcima
         }while(ImaExt(zastavice));
 
-        unsigned int* zastavice_ = reinterpret_cast<unsigned int*>(paketPom);
+        unsigned int* zastavice_ = reinterpret_cast<unsigned int*>(paket); //"Resetiraj" zastavice na prvu bitmasku
         zastavice = *zastavice_;
         qDebug() << "Prvi bajt podataka: " << QString::number(*paketPom, 16);
 
         paket = paketPom;
+        QDebug deb = qDebug();
+        /*for(int i = 0; i < 22;i++){
+            unsigned char tren = paket[i];
+                deb << QString::number(tren, 16);
+        }*/
+
         while(zastavice > 0){
             if((zastavice & 1) == 1){
+                qDebug() << QString::number(zastavice, 2);
                 unsigned char tren = *paket;
-                qDebug() << QString::number(tren, 16);
-                qDebug() << "Pomak: " << RT_Velicine[trenZastavica];
+                deb << QString::number(tren, 16) << " " << trenZastavica;
+                //qDebug() << "Pomak: " << RT_Velicine[trenZastavica];
                 paket += RT_Velicine[trenZastavica];
             }else{
 
@@ -146,8 +158,24 @@ namespace Citac {
             //qDebug() << QString::number(paket[i], 16);
             zastavice >>= 1;
         }
+    }
 
+    int OdrediJacinuSignala(){
 
+    }
+
+    MAC_Adr OdrediMACAdrese(char* paketPtr){
+        MAC_Adr adr;
+
+        QString adresa = "";
+        char *paket = paketPtr + 4; // Nakon 4 bajta počinje prva MAC adresa
+
+        for(int i = 0; i < 6;i++)
+            adresa += (QString::number(paket[i], 16)+":");
+
+        adr.Adr1 = adresa.toStdString();
+
+        return adr;
     }
 
     void ProcesirajPaket(int len, char* paket){
@@ -181,7 +209,29 @@ namespace Citac {
         // 0101    00    00
         // podtip  tip   verzija
 
-        OdrediTip(frameControlPrviBajt);
+        Okvir okvir;
+
+        okvir.VrstaOkvira = OdrediTip(frameControlPrviBajt);
+        okvir.JacinaSignala = OdrediJacinuSignala();
+        okvir.MAC = OdrediMACAdrese(paket);
+
+        okviri.append(okvir);
+    }
+
+    QList<Cvor> DohvatiSveCvorove(){
+        QList<Cvor> cvorovi;
+
+        //std::lock_guard<std::mutex> lock(mtx);
+
+        //TODO: završi
+
+        Cvor cvor;
+        cvor.MAC_Adresa = "FF:FF:FF";
+        cvorovi.append(cvor);
+        cvor.MAC_Adresa = "AA:BB:CC";
+        cvorovi.append(cvor);
+
+        return cvorovi;
     }
 
     void DretvaSlusatelj(int rawSocket){
@@ -191,7 +241,6 @@ namespace Citac {
 
         char buffer[65536];
         while(!ugasga){
-
             memset(buffer, 0, 65536);
             if((msgLen = recvfrom(rawSocket, buffer, 65536, 0, NULL, NULL)) == -1){
                 qDebug() << "Socket recv() greska: " << strerror(errno);
@@ -199,10 +248,8 @@ namespace Citac {
                 qDebug() << msgLen;
                 buffer[msgLen-1] = '\0';
                 ProcesirajPaket(msgLen, buffer);
-                //ugasga = true;
             }
             std::this_thread::sleep_for(std::chrono::seconds(1));
-            //qDebug() << buffer;
         }
     }
 

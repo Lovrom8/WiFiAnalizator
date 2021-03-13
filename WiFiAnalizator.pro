@@ -2,7 +2,7 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG += c++11
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -10,22 +10,24 @@ CONFIG += c++11
 
 SOURCES += \
     Citac.cpp \
-    GlavniProzor.cpp \
-    WiFiAnaliza.cpp \
-    WifiSucelja.cpp \
+    Cvor.cpp \
+    ProzorAnaliza.cpp \
+    ProzorGlavni.cpp \
+    WiFiSucelja.cpp \
     main.cpp
 
 HEADERS += \
     Citac.hpp \
-    GlavniProzor.hpp \
-    WiFiAnaliza.h \
-    WiFiZaglavlja.hpp \
-    WifiSucelja.hpp \
-    nl80211.h
+    Cvor.hpp \
+    Okvir.hpp \
+    ProzorAnaliza.hpp \
+    ProzorGlavni.hpp \
+    WiFiSucelja.hpp \
+    WiFiZaglavlja.hpp
 
 FORMS += \
-    GlavniProzor.ui \
-    WiFiAnaliza.ui
+    ProzorAnaliza.ui \
+    ProzorGlavni.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
