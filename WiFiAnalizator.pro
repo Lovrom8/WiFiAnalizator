@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     Citac.cpp \
     Cvor.cpp \
+    Okvir.cpp \
     ProzorAnaliza.cpp \
     ProzorGlavni.cpp \
     WiFiSucelja.cpp \
@@ -20,10 +21,10 @@ HEADERS += \
     Citac.hpp \
     Cvor.hpp \
     Okvir.hpp \
+    Paketi.h \
     ProzorAnaliza.hpp \
     ProzorGlavni.hpp \
-    WiFiSucelja.hpp \
-    WiFiZaglavlja.hpp
+    WiFiSucelja.hpp
 
 FORMS += \
     ProzorAnaliza.ui \

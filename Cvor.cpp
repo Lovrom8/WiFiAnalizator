@@ -23,7 +23,7 @@ QVariant CvorModel::data(const QModelIndex &index, int role) const{
             return QVariant();
 
       if(index.column() == 0)
-          return cvorovi[index.row()].MAC_Adresa.c_str();
+          return cvorovi[index.row()].MAC_Adresa;
 
       return QVariant();
 }

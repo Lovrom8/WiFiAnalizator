@@ -5,12 +5,23 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
 {
     ui->setupUi(this);
 
+     Citac::PokreniCitanjePrometa("wlx00c0caac4467");
+
     auto cvorovi = Citac::DohvatiSveCvorove();
     auto *ModelCvorovi = new CvorModel(this);
     ModelCvorovi->populateData(cvorovi);
 
     ui->qListViewCvorovi->setModel(ModelCvorovi);
     ui->qListViewCvorovi->show();
+
+    ui->labelAktivnihCvorova->setText(QString("Aktivnih čvorova: ")+QString::number(cvorovi.length()));
+
+    //auto okviri =
+    auto *ModelOkviri = new OkvirModel(this);
+    //ModelOkviri->populateData(okviri);
+
+    ui->tableOkviri->setModel(ModelOkviri);
+    ui->tableOkviri->show();
 }
 
 WiFiAnaliza::~WiFiAnaliza()

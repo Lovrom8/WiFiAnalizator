@@ -49,74 +49,6 @@ namespace WifiSucelja {
         return nazivi;
     }
 
-    int error_handler(sockaddr_nl *nla, nlmsgerr *err, void *arg){
-        //int *ret = (int*)arg;
-        //*ret = err->error;
-        return NL_STOP;
-    }
-
-    int finish_handler(nl_msg *msg, void *arg){
-        //int *(ret) = (int*)arg;
-        //*ret = 0;
-        return NL_SKIP;
-    }
-
-    static int expectedId;
-    static int IFTypeCallback(struct nl_msg* msg, void* arg)
-    {
-        qDebug() << "callback";
-        struct nlmsghdr* ret_hdr = nlmsg_hdr(msg);
-        struct nlattr *tb_msg[NL80211_ATTR_MAX + 1];
-
-        if (ret_hdr->nlmsg_type != expectedId)
-        {
-            // what is this??
-            qDebug() << "kaj";
-            return NL_STOP;
-        }
-
-        struct genlmsghdr *gnlh = (struct genlmsghdr*) nlmsg_data(ret_hdr);
-
-        nla_parse(tb_msg, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0),
-                  genlmsg_attrlen(gnlh, 0), NULL);
-
-        if (tb_msg[NL80211_ATTR_IFTYPE]) {
-            int type = nla_get_u32(tb_msg[NL80211_ATTR_IFTYPE]);
-
-            qDebug() << "Type: " << type;
-        }
-
-        return 0;
-    }
-
-    bool GetIFType(std::string uredaj){
-        unsigned int ret = 0;
-
-        nl_sock *socket = nl_socket_alloc();
-        genl_connect(socket);
-        expectedId = genl_ctrl_resolve(socket, "nl80211");
-        nl_socket_modify_cb(socket, NL_CB_VALID, NL_CB_CUSTOM, IFTypeCallback, NULL);
-
-        nl_msg *msg = nlmsg_alloc();
-        genlmsg_put(msg, 0, 0, expectedId, 0, 0, NL80211_CMD_GET_INTERFACE, 0);
-
-        int name = if_nametoindex(uredaj.c_str());
-        NLA_PUT_U32(msg, NL80211_ATTR_IFINDEX, name);
-
-        ret = nl_send_auto(socket, msg);
-        nl_recvmsgs_default(socket);
-
-        nl_socket_free(socket);
-        nlmsg_free(msg);
-        return true;
-
-        nla_put_failure:
-            nl_socket_free(socket);
-            nlmsg_free(msg);
-
-        return false;
-    }
-
     static int PostaviZastavice(std::string naziv, int flags){
         int sockfd = -1;
 
@@ -198,45 +130,6 @@ namespace WifiSucelja {
             close(sockfd);
             return false;
         }
-    }
-
-    bool PostaviUMonitorskiNLink(std::string uredaj){
-        unsigned int ret = 0;
-
-        nl_sock *socket = nl_socket_alloc();
-        genl_connect(socket);
-        expectedId = genl_ctrl_resolve(socket, "nl80211");
-        nl_socket_modify_cb(socket, NL_CB_VALID, NL_CB_CUSTOM, IFTypeCallback, NULL);
-
-        nl_msg *msg = nlmsg_alloc();
-        genlmsg_put(msg, 0, 0, expectedId, 0, 0, NL80211_CMD_SET_INTERFACE, 0);
-
-        int name = if_nametoindex(uredaj.c_str());
-
-        NLA_PUT_U32(msg, NL80211_ATTR_IFINDEX, name);
-        NLA_PUT_U32(msg, NL80211_ATTR_IFINDEX, NL80211_IFTYPE_MONITOR);
-
-        UgasiSucelje(uredaj);
-
-        ret = nl_send_auto(socket, msg);
-        // qDebug() << ret;
-
-       nl_recvmsgs_default(socket);
-       // qDebug() << ret;
-
-        nl_socket_free(socket);
-        nlmsg_free(msg);
-
-        Postavi(uredaj);
-
-        UpaliSucelje(uredaj);
-        return true;
-
-        nla_put_failure: // Mora se napraviti ovaj label jer NLA_PUT koristi taj goto :0
-            nl_socket_free(socket);
-            nlmsg_free(msg);
-
-        return false;
     }
 
     bool PostaviUMonitorskiNacin(std::string uredaj){

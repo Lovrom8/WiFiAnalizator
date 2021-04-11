@@ -13,11 +13,6 @@
 #include "unistd.h"
 #include "sys/ioctl.h"
 
-#include "nl80211.h"
-#include <netlink/netlink.h>
-#include <netlink/genl/genl.h>
-#include <netlink/genl/ctrl.h>
-#include <netlink/addr.h>
 #include <sys/types.h>
 
 #include "Cvor.hpp"

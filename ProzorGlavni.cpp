@@ -46,7 +46,16 @@ void GlavniProzor::StaviUMonitorski_Klik(){
    // if(msgBox.clickedButton() != btnYes )
     //    return;
 
-    Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
+
+
+
+    /* OVO */
+    /* Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString()); */
+
+
+
+
+
 
     /*if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
         QMessageBox::warning(this, tr("Greška"),

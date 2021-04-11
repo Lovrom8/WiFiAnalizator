@@ -4,7 +4,7 @@
 
 class Cvor {
 public:
-     std::string MAC_Adresa;
+     QString MAC_Adresa;
 };
 
 class CvorModel : public QAbstractTableModel {

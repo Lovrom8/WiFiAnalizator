@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ProzorAnaliza.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.9.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,12 +12,15 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -28,7 +31,8 @@ public:
     QWidget *centralwidget;
     QLabel *label;
     QListView *qListViewCvorovi;
-    QListView *qLiist2;
+    QLabel *labelAktivnihCvorova;
+    QTableWidget *tableOkviri;
     QMenuBar *menubar;
     QMenu *menuWiFi_Analiza;
     QStatusBar *statusbar;
@@ -36,28 +40,31 @@ public:
     void setupUi(QMainWindow *WiFiAnaliza)
     {
         if (WiFiAnaliza->objectName().isEmpty())
-            WiFiAnaliza->setObjectName(QString::fromUtf8("WiFiAnaliza"));
+            WiFiAnaliza->setObjectName(QStringLiteral("WiFiAnaliza"));
         WiFiAnaliza->resize(800, 600);
         centralwidget = new QWidget(WiFiAnaliza);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
         label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(40, 10, 67, 19));
         qListViewCvorovi = new QListView(centralwidget);
-        qListViewCvorovi->setObjectName(QString::fromUtf8("qListViewCvorovi"));
+        qListViewCvorovi->setObjectName(QStringLiteral("qListViewCvorovi"));
         qListViewCvorovi->setGeometry(QRect(30, 30, 341, 91));
-        qLiist2 = new QListView(centralwidget);
-        qLiist2->setObjectName(QString::fromUtf8("qLiist2"));
-        qLiist2->setGeometry(QRect(40, 140, 256, 192));
+        labelAktivnihCvorova = new QLabel(centralwidget);
+        labelAktivnihCvorova->setObjectName(QStringLiteral("labelAktivnihCvorova"));
+        labelAktivnihCvorova->setGeometry(QRect(390, 40, 141, 41));
+        tableOkviri = new QTableWidget(centralwidget);
+        tableOkviri->setObjectName(QStringLiteral("tableOkviri"));
+        tableOkviri->setGeometry(QRect(40, 210, 256, 192));
         WiFiAnaliza->setCentralWidget(centralwidget);
         menubar = new QMenuBar(WiFiAnaliza);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 800, 24));
         menuWiFi_Analiza = new QMenu(menubar);
-        menuWiFi_Analiza->setObjectName(QString::fromUtf8("menuWiFi_Analiza"));
+        menuWiFi_Analiza->setObjectName(QStringLiteral("menuWiFi_Analiza"));
         WiFiAnaliza->setMenuBar(menubar);
         statusbar = new QStatusBar(WiFiAnaliza);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        statusbar->setObjectName(QStringLiteral("statusbar"));
         WiFiAnaliza->setStatusBar(statusbar);
 
         menubar->addAction(menuWiFi_Analiza->menuAction());
@@ -69,9 +76,10 @@ public:
 
     void retranslateUi(QMainWindow *WiFiAnaliza)
     {
-        WiFiAnaliza->setWindowTitle(QCoreApplication::translate("WiFiAnaliza", "MainWindow", nullptr));
-        label->setText(QCoreApplication::translate("WiFiAnaliza", "\304\214vorovi", nullptr));
-        menuWiFi_Analiza->setTitle(QCoreApplication::translate("WiFiAnaliza", "WiFi Analiza", nullptr));
+        WiFiAnaliza->setWindowTitle(QApplication::translate("WiFiAnaliza", "MainWindow", Q_NULLPTR));
+        label->setText(QApplication::translate("WiFiAnaliza", "\304\214vorovi", Q_NULLPTR));
+        labelAktivnihCvorova->setText(QApplication::translate("WiFiAnaliza", "Aktivnih \304\215vorova:", Q_NULLPTR));
+        menuWiFi_Analiza->setTitle(QApplication::translate("WiFiAnaliza", "WiFi Analiza", Q_NULLPTR));
     } // retranslateUi
 
 };
