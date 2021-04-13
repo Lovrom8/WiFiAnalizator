@@ -3,8 +3,8 @@
 
 #include <QAbstractTableModel>
 #include <QMainWindow>
-#include "Cvor.hpp"
-#include "Citac.hpp"
+#include "Cvor.h"
+#include "Citac.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

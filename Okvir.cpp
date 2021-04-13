@@ -1,4 +1,4 @@
-#include "Okvir.hpp"
+#include "Okvir.h"
 
 OkvirModel::OkvirModel(QObject *parent) : QAbstractTableModel(parent) {}
 

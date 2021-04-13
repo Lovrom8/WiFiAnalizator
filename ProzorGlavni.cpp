@@ -1,8 +1,8 @@
-#include "ProzorGlavni.hpp"
-#include "ProzorAnaliza.hpp"
+#include "ProzorGlavni.h"
+#include "ProzorAnaliza.h"
 #include "ui_ProzorGlavni.h"
-#include "Citac.hpp"
-#include "WiFiSucelja.hpp"
+#include "Citac.h"
+#include "WiFiSucelja.h"
 
 GlavniProzor::GlavniProzor(QWidget *parent) : QMainWindow(parent), ui(new Ui::GlavniProzor)
 {
@@ -50,7 +50,7 @@ void GlavniProzor::StaviUMonitorski_Klik(){
 
 
     /* OVO */
-    /* Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString()); */
+    Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
 
 
 

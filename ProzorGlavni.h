@@ -2,7 +2,7 @@
 #define PROZORGLAVNI_H
 
 #include <QMainWindow>
-#include "WiFiSucelja.hpp"
+#include "WiFiSucelja.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GlavniProzor; }

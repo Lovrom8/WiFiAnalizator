@@ -1,4 +1,4 @@
-#include "WiFiSucelja.hpp"
+#include "WiFiSucelja.h"
 
 namespace WifiSucelja {
     bool JeBezicni(std::string naziv){

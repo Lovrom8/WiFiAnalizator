@@ -15,7 +15,7 @@
 
 #include <sys/types.h>
 
-#include "Cvor.hpp"
+#include "Cvor.h"
 #include <QDebug>
 #include <mutex>
 

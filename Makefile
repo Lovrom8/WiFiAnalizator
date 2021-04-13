@@ -53,6 +53,7 @@ OBJECTS_DIR   = ./
 SOURCES       = Citac.cpp \
 		Cvor.cpp \
 		Okvir.cpp \
+		Procesiranje.cpp \
 		ProzorAnaliza.cpp \
 		ProzorGlavni.cpp \
 		WiFiSucelja.cpp \
@@ -64,6 +65,7 @@ SOURCES       = Citac.cpp \
 OBJECTS       = Citac.o \
 		Cvor.o \
 		Okvir.o \
+		Procesiranje.o \
 		ProzorAnaliza.o \
 		ProzorGlavni.o \
 		WiFiSucelja.o \
@@ -254,15 +256,17 @@ DIST          = ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/spec_pre.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/exceptions.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/yacc.prf \
 		../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/lex.prf \
-		WiFiAnalizator.pro Citac.hpp \
-		Cvor.hpp \
-		Okvir.hpp \
+		WiFiAnalizator.pro Citac.h \
+		Cvor.h \
+		Okvir.h \
 		Paketi.h \
-		ProzorAnaliza.hpp \
-		ProzorGlavni.hpp \
-		WiFiSucelja.hpp Citac.cpp \
+		Procesiranje.h \
+		ProzorAnaliza.h \
+		ProzorGlavni.h \
+		WiFiSucelja.h Citac.cpp \
 		Cvor.cpp \
 		Okvir.cpp \
+		Procesiranje.cpp \
 		ProzorAnaliza.cpp \
 		ProzorGlavni.cpp \
 		WiFiSucelja.cpp \
@@ -664,8 +668,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../Qt5.9.9/5.9.9/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents Citac.hpp Cvor.hpp Okvir.hpp Paketi.h ProzorAnaliza.hpp ProzorGlavni.hpp WiFiSucelja.hpp $(DISTDIR)/
-	$(COPY_FILE) --parents Citac.cpp Cvor.cpp Okvir.cpp ProzorAnaliza.cpp ProzorGlavni.cpp WiFiSucelja.cpp main.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents Citac.h Cvor.h Okvir.h Paketi.h Procesiranje.h ProzorAnaliza.h ProzorGlavni.h WiFiSucelja.h $(DISTDIR)/
+	$(COPY_FILE) --parents Citac.cpp Cvor.cpp Okvir.cpp Procesiranje.cpp ProzorAnaliza.cpp ProzorGlavni.cpp WiFiSucelja.cpp main.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ProzorAnaliza.ui ProzorGlavni.ui $(DISTDIR)/
 
 
@@ -763,10 +767,10 @@ moc_Cvor.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		Cvor.hpp \
+		Cvor.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Cvor.hpp -o moc_Cvor.cpp
+	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Cvor.h -o moc_Cvor.cpp
 
 moc_Okvir.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
@@ -830,10 +834,10 @@ moc_Okvir.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel 
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		Okvir.hpp \
+		Okvir.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Okvir.hpp -o moc_Okvir.cpp
+	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include Okvir.h -o moc_Okvir.cpp
 
 moc_ProzorAnaliza.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
@@ -940,15 +944,16 @@ moc_ProzorAnaliza.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTab
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
-		Cvor.hpp \
-		Citac.hpp \
-		Okvir.hpp \
+		Cvor.h \
+		Citac.h \
+		Okvir.h \
 		Paketi.h \
+		Procesiranje.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
-		ProzorAnaliza.hpp \
+		ProzorAnaliza.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProzorAnaliza.hpp -o moc_ProzorAnaliza.cpp
+	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProzorAnaliza.h -o moc_ProzorAnaliza.cpp
 
 moc_ProzorGlavni.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmainwindow.h \
@@ -1053,15 +1058,15 @@ moc_ProzorGlavni.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindo
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
-		WiFiSucelja.hpp \
+		WiFiSucelja.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
-		Cvor.hpp \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
-		ProzorGlavni.hpp \
+		ProzorGlavni.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProzorGlavni.hpp -o moc_ProzorGlavni.cpp
+	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ProzorGlavni.h -o moc_ProzorGlavni.cpp
 
 moc_WiFiSucelja.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
@@ -1125,12 +1130,12 @@ moc_WiFiSucelja.cpp: ../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTable
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		Cvor.hpp \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
-		WiFiSucelja.hpp \
+		WiFiSucelja.h \
 		moc_predefs.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/bin/moc
-	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include WiFiSucelja.hpp -o moc_WiFiSucelja.cpp
+	/home/lovro/Qt5.9.9/5.9.9/gcc_64/bin/moc $(DEFINES) --include ./moc_predefs.h -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/mkspecs/linux-g++ -I/home/lovro/Documents/Analiz/WiFiAnalizator -I/home/lovro/usr/include/libnl3 -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtWidgets -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtGui -I/home/lovro/Qt5.9.9/5.9.9/gcc_64/include/QtCore -I/usr/include/c++/10 -I/usr/include/x86_64-linux-gnu/c++/10 -I/usr/include/c++/10/backward -I/usr/lib/gcc/x86_64-linux-gnu/10/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include WiFiSucelja.h -o moc_WiFiSucelja.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -1155,8 +1160,8 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 
 ####### Compile
 
-Citac.o: Citac.cpp Citac.hpp \
-		Cvor.hpp \
+Citac.o: Citac.cpp Citac.h \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
@@ -1219,12 +1224,13 @@ Citac.o: Citac.cpp Citac.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		Okvir.hpp \
+		Okvir.h \
 		Paketi.h \
+		Procesiranje.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Citac.o Citac.cpp
 
-Cvor.o: Cvor.cpp Cvor.hpp \
+Cvor.o: Cvor.cpp Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
@@ -1289,7 +1295,7 @@ Cvor.o: Cvor.cpp Cvor.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Cvor.o Cvor.cpp
 
-Okvir.o: Okvir.cpp Okvir.hpp \
+Okvir.o: Okvir.cpp Okvir.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
@@ -1354,7 +1360,75 @@ Okvir.o: Okvir.cpp Okvir.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Okvir.o Okvir.cpp
 
-ProzorAnaliza.o: ProzorAnaliza.cpp ProzorAnaliza.hpp \
+Procesiranje.o: Procesiranje.cpp Procesiranje.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qdebug.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qalgorithms.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qglobal.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qconfig.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qtcore-config.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsysinfo.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qlogging.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qflags.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qatomic.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qmutex.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qnumeric.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qversiontagging.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qhash.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qchar.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qiterator.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qlist.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qrefcount.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qarraydata.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qhashfunctions.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qpair.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qbytearraylist.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qbytearray.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qnamespace.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qstring.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qstringbuilder.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qstringlist.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qregexp.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qstringmatcher.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qmap.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qtextstream.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qiodevice.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qobject.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qobjectdefs.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcoreevent.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qscopedpointer.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qmetatype.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvarlengtharray.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontainerfwd.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qobject_impl.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qlocale.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qshareddata.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvector.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qpoint.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qset.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		Paketi.h \
+		Okvir.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o Procesiranje.o Procesiranje.cpp
+
+ProzorAnaliza.o: ProzorAnaliza.cpp ProzorAnaliza.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
@@ -1460,10 +1534,11 @@ ProzorAnaliza.o: ProzorAnaliza.cpp ProzorAnaliza.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
-		Cvor.hpp \
-		Citac.hpp \
-		Okvir.hpp \
+		Cvor.h \
+		Citac.h \
+		Okvir.h \
 		Paketi.h \
+		Procesiranje.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
 		ui_ProzorAnaliza.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QVariant \
@@ -1505,10 +1580,13 @@ ProzorAnaliza.o: ProzorAnaliza.cpp ProzorAnaliza.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmenubar.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QStatusBar \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qstatusbar.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QTableWidget \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtablewidget.h \
+		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtableview.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ProzorAnaliza.o ProzorAnaliza.cpp
 
-ProzorGlavni.o: ProzorGlavni.cpp ProzorGlavni.hpp \
+ProzorGlavni.o: ProzorGlavni.cpp ProzorGlavni.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1612,15 +1690,16 @@ ProzorGlavni.o: ProzorGlavni.cpp ProzorGlavni.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
-		WiFiSucelja.hpp \
+		WiFiSucelja.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
-		Cvor.hpp \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
-		ProzorAnaliza.hpp \
-		Citac.hpp \
-		Okvir.hpp \
+		ProzorAnaliza.h \
+		Citac.h \
+		Okvir.h \
 		Paketi.h \
+		Procesiranje.h \
 		ui_ProzorGlavni.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QVariant \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QAction \
@@ -1665,7 +1744,7 @@ ProzorGlavni.o: ProzorGlavni.cpp ProzorGlavni.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o ProzorGlavni.o ProzorGlavni.cpp
 
-WiFiSucelja.o: WiFiSucelja.cpp WiFiSucelja.hpp \
+WiFiSucelja.o: WiFiSucelja.cpp WiFiSucelja.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qvariant.h \
@@ -1728,11 +1807,11 @@ WiFiSucelja.o: WiFiSucelja.cpp WiFiSucelja.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qcontiguouscache.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qsharedpointer_impl.h \
-		Cvor.hpp \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o WiFiSucelja.o WiFiSucelja.cpp
 
-main.o: main.cpp ProzorGlavni.hpp \
+main.o: main.cpp ProzorGlavni.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QMainWindow \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qmainwindow.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
@@ -1836,10 +1915,10 @@ main.o: main.cpp ProzorGlavni.hpp \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qtouchdevice.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qtabwidget.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtGui/qicon.h \
-		WiFiSucelja.hpp \
+		WiFiSucelja.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QAbstractTableModel \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/qabstractitemmodel.h \
-		Cvor.hpp \
+		Cvor.h \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtCore/QDebug \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/QApplication \
 		../../../Qt5.9.9/5.9.9/gcc_64/include/QtWidgets/qapplication.h \

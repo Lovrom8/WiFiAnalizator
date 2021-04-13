@@ -1,4 +1,4 @@
-#include "Cvor.hpp"
+#include "Cvor.h"
 
 CvorModel::CvorModel(QObject *parent) : QAbstractTableModel(parent) {}
 

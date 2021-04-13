@@ -12,19 +12,21 @@ SOURCES += \
     Citac.cpp \
     Cvor.cpp \
     Okvir.cpp \
+    Procesiranje.cpp \
     ProzorAnaliza.cpp \
     ProzorGlavni.cpp \
     WiFiSucelja.cpp \
     main.cpp
 
 HEADERS += \
-    Citac.hpp \
-    Cvor.hpp \
-    Okvir.hpp \
+    Citac.h \
+    Cvor.h \
+    Okvir.h \
     Paketi.h \
-    ProzorAnaliza.hpp \
-    ProzorGlavni.hpp \
-    WiFiSucelja.hpp
+    Procesiranje.h \
+    ProzorAnaliza.h \
+    ProzorGlavni.h \
+    WiFiSucelja.h
 
 FORMS += \
     ProzorAnaliza.ui \

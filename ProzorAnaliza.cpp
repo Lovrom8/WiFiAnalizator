@@ -1,4 +1,4 @@
-#include "ProzorAnaliza.hpp"
+#include "ProzorAnaliza.h"
 #include "ui_ProzorAnaliza.h"
 
 WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFiAnaliza)
@@ -20,8 +20,8 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     auto *ModelOkviri = new OkvirModel(this);
     //ModelOkviri->populateData(okviri);
 
-    ui->tableOkviri->setModel(ModelOkviri);
-    ui->tableOkviri->show();
+    //ui->tableOkviri->setModel(ModelOkviri);
+    //ui->tableOkviri->show();
 }
 
 WiFiAnaliza::~WiFiAnaliza()
