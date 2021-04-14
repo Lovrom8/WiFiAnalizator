@@ -159,52 +159,6 @@ namespace Procesiranje {
         return ReadInt<unsigned short>(hdrLen);
     }
 
-    std::vector<std::vector<unsigned char>> MACAdr;
-    bool JeBroadcastMAC(std::vector<unsigned char> MAC) {
-        return std::equal(MAC.begin() + 1, MAC.end(), MAC.begin()) && MAC[0] == 0xFF;
-    }
-
-    void DodajMAC(std::vector<unsigned char> MAC) {
-        if (!std::count(MACAdr.begin(), MACAdr.end(), MAC) && !JeBroadcastMAC(MAC))
-            MACAdr.push_back(MAC);
-    }
-
-    void OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa) {
-        int rtLen = OdrediDuljinuRT(bytes);
-        int trenByte = rtLen + 4;
-        unsigned char* adreseBytes = bytes;
-
-        AdrPolja polja = vrstaPaketa.AdresnaPolja;
-
-        if (vrstaPaketa.Vrsta == "Data") {
-            unsigned char FCZastavice = bytes[rtLen + 1];
-
-            int ToDS = (FCZastavice & 1) == 1;
-            FCZastavice >>= 1;
-            int FromDS = (FCZastavice & 1) == 1;
-
-            polja = vrstaPaketa.DohvatiAdrPolja(ToDS, FromDS);
-        }
-
-        if (polja.Adr1 == Ima) {
-            DodajMAC(Split(adreseBytes, trenByte, 6));
-            trenByte += 6;
-        }
-
-        if (polja.Adr2 == Ima) {
-            DodajMAC(Split(adreseBytes, trenByte, 6));
-            trenByte += 6;
-        }
-
-        if (polja.Adr3 == Ima) {
-            DodajMAC(Split(adreseBytes, trenByte, 6));
-            trenByte += 6;
-        }
-
-        if (polja.Adr4 == Ima)
-            DodajMAC(Split(adreseBytes, trenByte, 6));
-    }
-
     Paket OdrediVrstu(unsigned char* bytes) {
         Paketi paketi;
         auto vrstePaketa = paketi.DohvatiPakete();
@@ -224,7 +178,6 @@ namespace Procesiranje {
         return paket;
     }
 
-
     Okvir ProcesirajPaket(int len, unsigned char* paket){
         unsigned char *paketPocetak = paket;
         paket = paket + OdrediDuljinuRT(paket);   //Prvih 26 bajtova je RADIOTAP HEADER (bar za ovaj adapter)
@@ -243,12 +196,11 @@ namespace Procesiranje {
 
         Okvir okvir;
 
-        okvir.VrstaOkvira = OdrediVrstu(paketPocetak).Naziv;
+        okvir.paket = OdrediVrstu(paketPocetak);
+        okvir.VrstaOkvira = okvir.paket.Naziv;
         okvir.JacinaSignala = OdrediJacinuSignala(paketPocetak);
-        //okvir.MAC = OdrediMACAdrese(paketPocetak);
 
         return okvir;
-       // okviri.append(okvir);
     }
 }
 

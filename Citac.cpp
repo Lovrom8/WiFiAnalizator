@@ -32,28 +32,7 @@
         return sock_raw;
     }
 
-    QList<Cvor> DohvatiSveCvorove(){
-        QList<Cvor> cvorovi;
-
-        //std::lock_guard<std::mutex> lock(mtx);
-
-        //TODO: završi
-
-        /*for(MACNiz mac : MACAdr){
-            Cvor cvor;
-            cvor.MAC_Adresa = "";
-            for(int i = 0; i < 6;i++){
-                cvor.MAC_Adresa += QString::number(mac[i], 16);
-                cvor.MAC_Adresa += ":";
-            }
-
-            cvorovi.append(cvor);
-        }*/
-
-        return cvorovi;
-    }
-
-    void Testiraj(){
+    void Citac::Testiraj(){
         unsigned char bytes[100] = { // RTS
                  0x00 ,0x00 ,0x1a ,0x00 ,0xae ,0x40 ,0x00 ,0xa0 ,0x20 ,0x08 ,0x00 ,0x00 ,0x10 ,0x02 ,0x6c ,0x09,
                  0xa0 ,0x00 ,0xc0 ,0x00 ,0x3f ,0x00 ,0x00 ,0x00 ,0x00 ,0x00 ,0xb4 ,0x00 ,0xb4 ,0x01 ,0x88 ,0x5b,
@@ -114,6 +93,64 @@
             OdrediAdrese(bytesData, pak4);
     }
 
+    std::vector<std::vector<unsigned char>> MACAdr;
+    bool JeBroadcastMAC(std::vector<unsigned char> MAC) {
+        return std::equal(MAC.begin() + 1, MAC.end(), MAC.begin()) && MAC[0] == 0xFF;
+    }
+
+    void Citac::DodajMAC(std::vector<unsigned char> MAC) {
+        if (!std::count(MACAdr.begin(), MACAdr.end(), MAC) && !JeBroadcastMAC(MAC)) {
+            MACAdr.push_back(MAC);
+
+            Cvor cvor;
+            cvor.MAC_Adresa = "";
+            for(int i = 0; i < 6;i++){
+                cvor.MAC_Adresa += QString::number(MAC[i], 16);
+                cvor.MAC_Adresa += ":";
+            }
+
+           cvor.MAC_Adresa.chop(1);
+
+            emit(noviCvor(cvor));
+        }
+    }
+
+    void Citac::OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa) {
+        int rtLen = Procesiranje::OdrediDuljinuRT(bytes);
+        int trenByte = rtLen + 4;
+        unsigned char* adreseBytes = bytes;
+
+        AdrPolja polja = vrstaPaketa.AdresnaPolja;
+
+        if (vrstaPaketa.Vrsta == "Data") {
+            unsigned char FCZastavice = bytes[rtLen + 1];
+
+            int ToDS = (FCZastavice & 1) == 1;
+            FCZastavice >>= 1;
+            int FromDS = (FCZastavice & 1) == 1;
+
+            polja = vrstaPaketa.DohvatiAdrPolja(ToDS, FromDS);
+        }
+
+        if (polja.Adr1 == Ima) {
+            DodajMAC(Procesiranje::Split(adreseBytes, trenByte, 6));
+            trenByte += 6;
+        }
+
+        if (polja.Adr2 == Ima) {
+            DodajMAC(Procesiranje::Split(adreseBytes, trenByte, 6));
+            trenByte += 6;
+        }
+
+        if (polja.Adr3 == Ima) {
+            DodajMAC(Procesiranje::Split(adreseBytes, trenByte, 6));
+            trenByte += 6;
+        }
+
+        if (polja.Adr4 == Ima)
+            DodajMAC(Procesiranje::Split(adreseBytes, trenByte, 6));
+    }
+
     void Citac::DretvaSlusatelj(int rawSocket){
         bool ugasga = false;
         qDebug() << "Počinjem čitati";
@@ -129,17 +166,22 @@
                 buffer[msgLen-1] = '\0';
 
                 auto okvir = Procesiranje::ProcesirajPaket(msgLen, buffer);
+                okvir.Vrijeme = (double)timer.elapsed() / 1000;
+                OdrediAdrese(buffer, okvir.paket);
+
                 emit noviOkvir(okvir);
             }
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            //std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
 
     void Citac::PokreniCitanjePrometa(std::string nazivSucelja) {
-        Testiraj();
+        //Testiraj();
        // return;
+        timer.start();
 
         qRegisterMetaType<Okvir>("Okvir"); //VAŽNO!
+        qRegisterMetaType<Cvor>("Cvor");
 
         int socket = -1;
         if((socket = OtvoriSoket(nazivSucelja)) == -1){
@@ -150,10 +192,4 @@
         qDebug() << "Otvaram dretvu sušatelj";
         std::thread thrd(&Citac::DretvaSlusatelj, this, socket);
         thrd.detach();
-    }
-
-    void Citac::pokreni() {
-        Okvir test;
-        test.VrstaOkvira = "testni";
-        emit noviOkvir(test);
     }

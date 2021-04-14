@@ -38,4 +38,12 @@ QVariant CvorModel::headerData(int section, Qt::Orientation orientation, int rol
     return QVariant();
 }
 
+bool CvorModel::dodajCvor(Cvor cvor, const QModelIndex &parent)
+{
+    beginInsertRows(parent, cvorovi.count(), cvorovi.count());
+    cvorovi.append(cvor);
+    endInsertRows();
+    return true;
+}
+
 

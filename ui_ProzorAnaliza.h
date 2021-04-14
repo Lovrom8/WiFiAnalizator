@@ -33,6 +33,7 @@ public:
     QListView *qListViewCvorovi;
     QLabel *labelAktivnihCvorova;
     QTableView *tableOkviri;
+    QLabel *label_2;
     QMenuBar *menubar;
     QMenu *menuWiFi_Analiza;
     QStatusBar *statusbar;
@@ -41,7 +42,7 @@ public:
     {
         if (WiFiAnaliza->objectName().isEmpty())
             WiFiAnaliza->setObjectName(QStringLiteral("WiFiAnaliza"));
-        WiFiAnaliza->resize(800, 600);
+        WiFiAnaliza->resize(677, 494);
         centralwidget = new QWidget(WiFiAnaliza);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         label = new QLabel(centralwidget);
@@ -55,11 +56,14 @@ public:
         labelAktivnihCvorova->setGeometry(QRect(390, 40, 141, 41));
         tableOkviri = new QTableView(centralwidget);
         tableOkviri->setObjectName(QStringLiteral("tableOkviri"));
-        tableOkviri->setGeometry(QRect(40, 230, 256, 192));
+        tableOkviri->setGeometry(QRect(30, 180, 631, 271));
+        label_2 = new QLabel(centralwidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(40, 160, 67, 19));
         WiFiAnaliza->setCentralWidget(centralwidget);
         menubar = new QMenuBar(WiFiAnaliza);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 800, 24));
+        menubar->setGeometry(QRect(0, 0, 677, 24));
         menuWiFi_Analiza = new QMenu(menubar);
         menuWiFi_Analiza->setObjectName(QStringLiteral("menuWiFi_Analiza"));
         WiFiAnaliza->setMenuBar(menubar);
@@ -79,6 +83,7 @@ public:
         WiFiAnaliza->setWindowTitle(QApplication::translate("WiFiAnaliza", "MainWindow", Q_NULLPTR));
         label->setText(QApplication::translate("WiFiAnaliza", "\304\214vorovi", Q_NULLPTR));
         labelAktivnihCvorova->setText(QApplication::translate("WiFiAnaliza", "Aktivnih \304\215vorova:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("WiFiAnaliza", "Paketi", Q_NULLPTR));
         menuWiFi_Analiza->setTitle(QApplication::translate("WiFiAnaliza", "WiFi Analiza", Q_NULLPTR));
     } // retranslateUi
 

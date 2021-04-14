@@ -39,6 +39,8 @@ public:
     AdrPolja AdresnaPolja;
     int Tip;
 
+    Paket() { }
+
     Paket(std::string naziv, int tip) {
         Naziv = naziv;
         Tip = tip;

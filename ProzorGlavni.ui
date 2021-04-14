@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>656</width>
-    <height>335</height>
+    <width>339</width>
+    <height>305</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="btnPostaviUMonitorski">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>240</y>
+      <x>60</x>
+      <y>230</y>
       <width>201</width>
       <height>27</height>
      </rect>
@@ -45,12 +45,12 @@
      <rect>
       <x>20</x>
       <y>30</y>
-      <width>621</width>
+      <width>291</width>
       <height>192</height>
      </rect>
     </property>
     <property name="cursor" stdset="0">
-     <cursorShape>PointingHandCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
     </property>
     <attribute name="horizontalHeaderCascadingSectionResizes">
      <bool>true</bool>
@@ -62,7 +62,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>656</width>
+     <width>339</width>
      <height>24</height>
     </rect>
    </property>

@@ -24,10 +24,15 @@ public:
 
 public slots:
     void dodajOkvir(Okvir okvir);
+    void dodajCvor(Cvor cvor);
 
 private:
     Ui::WiFiAnaliza *ui;
     std::string nazivSucelja;
+    OkvirModel *ModelOkviri;
+    CvorModel *ModelCvorovi;
+        QList<Okvir> okviri;
+        QList<Cvor> cvorovi;
 };
 
 #endif // PROZORANALIZA_H

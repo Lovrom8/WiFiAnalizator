@@ -1,4 +1,6 @@
 #pragma once
+#include "Paketi.h"
+
 #include <string>
 #include <QAbstractTableModel>
 
@@ -15,6 +17,7 @@ public:
     MAC_Adr MAC;
     int JacinaSignala;
     std::string VrstaOkvira;
+    Paket paket;
 };
 
 class OkvirModel : public QAbstractTableModel {
@@ -31,6 +34,7 @@ public:
        QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
        QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
        bool dodajOkvir(Okvir okvir, const QModelIndex &parent = QModelIndex());
+
 private:
        QList<Okvir> okviri;
 };

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>677</width>
+    <height>494</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -53,11 +53,24 @@
    <widget class="QTableView" name="tableOkviri">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>230</y>
-      <width>256</width>
-      <height>192</height>
+      <x>30</x>
+      <y>180</y>
+      <width>631</width>
+      <height>271</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>160</y>
+      <width>67</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Paketi</string>
     </property>
    </widget>
   </widget>
@@ -66,7 +79,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>677</width>
      <height>24</height>
     </rect>
    </property>

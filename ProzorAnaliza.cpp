@@ -1,45 +1,37 @@
 #include "ProzorAnaliza.h"
 #include "ui_ProzorAnaliza.h"
 
-OkvirModel *ModelOkviri;
-
 WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFiAnaliza)
 {
     ui->setupUi(this);
 
-    Citac* citac = new Citac();
-    connect(citac, SIGNAL(noviOkvir(Okvir)), this, SLOT(dodajOkvir(Okvir)));
-    citac->pokreni();
+    Citac *citac = new Citac();
 
-     citac->PokreniCitanjePrometa("wlx00c0caac4467");
+    ModelCvorovi = new CvorModel(this);
+    ModelCvorovi->populateData(cvorovi);
 
-    //auto cvorovi = Citac::DohvatiSveCvorove();
-   // auto *ModelCvorovi = new CvorModel(this);
-    //ModelCvorovi->populateData(cvorovi);
+    ui->qListViewCvorovi->setModel(ModelCvorovi);
+    ui->qListViewCvorovi->show();
 
-    //ui->qListViewCvorovi->setModel(ModelCvorovi);
-    //ui->qListViewCvorovi->show();
+    ui->labelAktivnihCvorova->setText(QString("Aktivnih čvorova: ")+QString::number(cvorovi.length()));
 
-    //ui->labelAktivnihCvorova->setText(QString("Aktivnih čvorova: ")+QString::number(cvorovi.length()));
-
-    QList<Okvir> okviri;
-    Okvir testni;
-    testni.Vrijeme = 1;
-    testni.VrstaOkvira = "testna";
-    okviri.append(testni);
     ModelOkviri = new OkvirModel(this);
     ModelOkviri->populateData(okviri);
 
+    ui->tableOkviri->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->tableOkviri->setModel(ModelOkviri);
     ui->tableOkviri->show();
 
-    testni.VrstaOkvira = "testet";
-    ModelOkviri->dodajOkvir(testni);
+    connect(citac, SIGNAL(noviOkvir(Okvir)), this, SLOT(dodajOkvir(Okvir)));
+    connect(citac, SIGNAL(noviCvor(Cvor)), this, SLOT(dodajCvor(Cvor)));
+
+    citac->PokreniCitanjePrometa("wlx00c0caac4467");
 }
 
 WiFiAnaliza::~WiFiAnaliza()
 {
     delete ui;
+    //delete citac;
 }
 
 void WiFiAnaliza::PostaviSucelje(std::string _nazivSucelja){
@@ -47,8 +39,13 @@ void WiFiAnaliza::PostaviSucelje(std::string _nazivSucelja){
 }
 
 void WiFiAnaliza::dodajOkvir(Okvir okvir) {
-    //qDebug() <<  okvir.VrstaOkvira.c_str() << " poslano natrag";
-
     if(ModelOkviri != NULL)
      ModelOkviri->dodajOkvir(okvir);
+}
+
+void WiFiAnaliza::dodajCvor(Cvor cvor)  {
+   if(ModelCvorovi != NULL)
+          ModelCvorovi->dodajCvor(cvor);
+
+    ui->labelAktivnihCvorova->setText(QString("Aktivnih čvorova: ")+QString::number(ModelCvorovi->rowCount()));
 }

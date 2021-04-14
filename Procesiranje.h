@@ -62,13 +62,14 @@ namespace Procesiranje
 
          int OdrediJacinuSignala(unsigned char* paket);
          int OdrediDuljinuRT(unsigned char* bytes);
-         void OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa);
 
          bool JeBroadcastMAC(std::vector<unsigned char> MAC);
          void DodajMAC(std::vector<unsigned char> MAC);
 
          Paket OdrediVrstu(unsigned char* bytes);
          Okvir ProcesirajPaket(int len, unsigned char* paket);
+
+         std::vector<unsigned char> Split(unsigned char* bytes, int from, int len);
 
          inline int RT_LEN = 26;
          inline int LEN = 26;

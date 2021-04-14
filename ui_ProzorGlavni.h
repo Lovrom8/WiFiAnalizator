@@ -40,24 +40,24 @@ public:
     {
         if (GlavniProzor->objectName().isEmpty())
             GlavniProzor->setObjectName(QStringLiteral("GlavniProzor"));
-        GlavniProzor->resize(656, 335);
+        GlavniProzor->resize(339, 305);
         centralwidget = new QWidget(GlavniProzor);
         centralwidget->setObjectName(QStringLiteral("centralwidget"));
         btnPostaviUMonitorski = new QPushButton(centralwidget);
         btnPostaviUMonitorski->setObjectName(QStringLiteral("btnPostaviUMonitorski"));
-        btnPostaviUMonitorski->setGeometry(QRect(230, 240, 201, 27));
+        btnPostaviUMonitorski->setGeometry(QRect(60, 230, 201, 27));
         label = new QLabel(centralwidget);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(30, 10, 101, 19));
         qtTableSucelja = new QTableView(centralwidget);
         qtTableSucelja->setObjectName(QStringLiteral("qtTableSucelja"));
-        qtTableSucelja->setGeometry(QRect(20, 30, 621, 192));
-        qtTableSucelja->viewport()->setProperty("cursor", QVariant(QCursor(Qt::PointingHandCursor)));
+        qtTableSucelja->setGeometry(QRect(20, 30, 291, 192));
+        qtTableSucelja->viewport()->setProperty("cursor", QVariant(QCursor(Qt::ArrowCursor)));
         qtTableSucelja->horizontalHeader()->setCascadingSectionResizes(true);
         GlavniProzor->setCentralWidget(centralwidget);
         menubar = new QMenuBar(GlavniProzor);
         menubar->setObjectName(QStringLiteral("menubar"));
-        menubar->setGeometry(QRect(0, 0, 656, 24));
+        menubar->setGeometry(QRect(0, 0, 339, 24));
         menuWifiAnalizator = new QMenu(menubar);
         menuWifiAnalizator->setObjectName(QStringLiteral("menuWifiAnalizator"));
         GlavniProzor->setMenuBar(menubar);

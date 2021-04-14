@@ -12,6 +12,7 @@ GlavniProzor::GlavniProzor(QWidget *parent) : QMainWindow(parent), ui(new Ui::Gl
     WifiSuceljeModel *ModelSucelja = new WifiSuceljeModel(this);
     ModelSucelja->populateData(sucelja);
 
+    ui->qtTableSucelja->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->qtTableSucelja->setModel(ModelSucelja);
     ui->qtTableSucelja->horizontalHeader()->setVisible(true);
     ui->qtTableSucelja->show();

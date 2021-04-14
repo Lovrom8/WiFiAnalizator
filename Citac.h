@@ -22,6 +22,7 @@
 #include "Procesiranje.h"
 
 #include <QDebug>
+#include <QElapsedTimer>
 
 class Citac : public QObject {
     Q_OBJECT
@@ -39,7 +40,11 @@ signals:
     void noviCvor(Cvor cvor);
 
  private:
+    void OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa);
+    void DodajMAC(std::vector<unsigned char> MAC);
+    void Testiraj();
     bool ugasi = false;
+    QElapsedTimer timer;
 };
 
 typedef std::vector<unsigned char> MACNiz;
