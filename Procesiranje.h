@@ -68,7 +68,7 @@ namespace Procesiranje
          void DodajMAC(std::vector<unsigned char> MAC);
 
          Paket OdrediVrstu(unsigned char* bytes);
-         void ProcesirajPaket(int len, unsigned char* paket);
+         Okvir ProcesirajPaket(int len, unsigned char* paket);
 
          inline int RT_LEN = 26;
          inline int LEN = 26;

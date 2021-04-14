@@ -1,7 +1,6 @@
 #include "Citac.h"
 
-namespace Citac {
-    int OtvoriSoket(std::string nazivSucelja){
+    int Citac::OtvoriSoket(std::string nazivSucelja){
         ifreq ifr;
         sockaddr_ll ll;
 
@@ -115,7 +114,7 @@ namespace Citac {
             OdrediAdrese(bytesData, pak4);
     }
 
-    void DretvaSlusatelj(int rawSocket){
+    void Citac::DretvaSlusatelj(int rawSocket){
         bool ugasga = false;
         qDebug() << "Počinjem čitati";
         int msgLen = 0;
@@ -128,15 +127,19 @@ namespace Citac {
             }else{
                 qDebug() << msgLen;
                 buffer[msgLen-1] = '\0';
-                Procesiranje::ProcesirajPaket(msgLen, buffer);
+
+                auto okvir = Procesiranje::ProcesirajPaket(msgLen, buffer);
+                emit noviOkvir(okvir);
             }
             std::this_thread::sleep_for(std::chrono::seconds(1));
         }
     }
 
-    void PokreniCitanjePrometa(std::string nazivSucelja) {
+    void Citac::PokreniCitanjePrometa(std::string nazivSucelja) {
         Testiraj();
        // return;
+
+        qRegisterMetaType<Okvir>("Okvir"); //VAŽNO!
 
         int socket = -1;
         if((socket = OtvoriSoket(nazivSucelja)) == -1){
@@ -145,7 +148,12 @@ namespace Citac {
         }
         qDebug() << "Uspješno otvoren sirovi soket na indeksu" << socket;
         qDebug() << "Otvaram dretvu sušatelj";
-        std::thread thrd(DretvaSlusatelj, socket);
+        std::thread thrd(&Citac::DretvaSlusatelj, this, socket);
         thrd.detach();
     }
-}
+
+    void Citac::pokreni() {
+        Okvir test;
+        test.VrstaOkvira = "testni";
+        emit noviOkvir(test);
+    }

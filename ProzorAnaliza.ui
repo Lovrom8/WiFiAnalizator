@@ -50,11 +50,11 @@
      <string>Aktivnih čvorova:</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableOkviri">
+   <widget class="QTableView" name="tableOkviri">
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>210</y>
+      <y>230</y>
       <width>256</width>
       <height>192</height>
      </rect>

@@ -37,3 +37,5 @@ QVariant CvorModel::headerData(int section, Qt::Orientation orientation, int rol
 
     return QVariant();
 }
+
+

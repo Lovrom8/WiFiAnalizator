@@ -50,7 +50,7 @@ void GlavniProzor::StaviUMonitorski_Klik(){
 
 
     /* OVO */
-    Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
+    //Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
 
 
 

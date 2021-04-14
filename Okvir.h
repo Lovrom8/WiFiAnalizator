@@ -30,7 +30,7 @@ public:
 
        QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
        QVariant headerData (int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const Q_DECL_OVERRIDE;
-
+       bool dodajOkvir(Okvir okvir, const QModelIndex &parent = QModelIndex());
 private:
        QList<Okvir> okviri;
 };

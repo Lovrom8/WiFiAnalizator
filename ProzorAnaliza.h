@@ -5,6 +5,7 @@
 #include <QMainWindow>
 #include "Cvor.h"
 #include "Citac.h"
+#include "Okvir.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,6 +21,9 @@ public:
     explicit WiFiAnaliza(QWidget *parent = nullptr);
     ~WiFiAnaliza();
     void PostaviSucelje(std::string);
+
+public slots:
+    void dodajOkvir(Okvir okvir);
 
 private:
     Ui::WiFiAnaliza *ui;

@@ -15,7 +15,7 @@ int OkvirModel::rowCount(const QModelIndex &parent) const {
 
 int OkvirModel::columnCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
-    return 1;
+    return 2;
 }
 
 QVariant OkvirModel::data(const QModelIndex &index, int role) const{
@@ -36,8 +36,16 @@ QVariant OkvirModel::headerData(int section, Qt::Orientation orientation, int ro
 
     if(section == 0)
         return QString("Vrijeme");
-    else if(section == 0)
+    else if(section == 1)
         return QString("Vrsta okvira");
 
     return QVariant();
+}
+
+bool OkvirModel::dodajOkvir(Okvir okvir, const QModelIndex &parent)
+{
+    beginInsertRows(parent, okviri.count(), okviri.count());
+    okviri.append(okvir);
+    endInsertRows();
+    return true;
 }

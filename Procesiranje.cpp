@@ -225,7 +225,7 @@ namespace Procesiranje {
     }
 
 
-    void ProcesirajPaket(int len, unsigned char* paket){
+    Okvir ProcesirajPaket(int len, unsigned char* paket){
         unsigned char *paketPocetak = paket;
         paket = paket + OdrediDuljinuRT(paket);   //Prvih 26 bajtova je RADIOTAP HEADER (bar za ovaj adapter)
 
@@ -243,11 +243,12 @@ namespace Procesiranje {
 
         Okvir okvir;
 
-        okvir.VrstaOkvira = OdrediVrstu(paketPocetak).Vrsta;
+        okvir.VrstaOkvira = OdrediVrstu(paketPocetak).Naziv;
         okvir.JacinaSignala = OdrediJacinuSignala(paketPocetak);
         //okvir.MAC = OdrediMACAdrese(paketPocetak);
 
-        okviri.append(okvir);
+        return okvir;
+       // okviri.append(okvir);
     }
 }
 

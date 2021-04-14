@@ -20,7 +20,7 @@
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QTableWidget>
+#include <QtWidgets/QTableView>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -32,7 +32,7 @@ public:
     QLabel *label;
     QListView *qListViewCvorovi;
     QLabel *labelAktivnihCvorova;
-    QTableWidget *tableOkviri;
+    QTableView *tableOkviri;
     QMenuBar *menubar;
     QMenu *menuWiFi_Analiza;
     QStatusBar *statusbar;
@@ -53,9 +53,9 @@ public:
         labelAktivnihCvorova = new QLabel(centralwidget);
         labelAktivnihCvorova->setObjectName(QStringLiteral("labelAktivnihCvorova"));
         labelAktivnihCvorova->setGeometry(QRect(390, 40, 141, 41));
-        tableOkviri = new QTableWidget(centralwidget);
+        tableOkviri = new QTableView(centralwidget);
         tableOkviri->setObjectName(QStringLiteral("tableOkviri"));
-        tableOkviri->setGeometry(QRect(40, 210, 256, 192));
+        tableOkviri->setGeometry(QRect(40, 230, 256, 192));
         WiFiAnaliza->setCentralWidget(centralwidget);
         menubar = new QMenuBar(WiFiAnaliza);
         menubar->setObjectName(QStringLiteral("menubar"));

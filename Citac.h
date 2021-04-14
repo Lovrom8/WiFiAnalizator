@@ -7,6 +7,7 @@
 #include "net/ethernet.h"
 #include "sys/ioctl.h"
 #include "arpa/inet.h"
+#include "ProzorAnaliza.h"
 
 #include "string.h"
 #include <string>
@@ -22,22 +23,26 @@
 
 #include <QDebug>
 
-namespace Citac {
-    inline bool ugasi = false;
+class Citac : public QObject {
+    Q_OBJECT
 
+public:
+    void pokreni();
     int OtvoriSoket(std::string nazivSucelja);
     void PokreniCitanjePrometa(std::string nazivSucelja);
     void UgasiCitanjePrometa(std::string nazivSucelja);
+    void DretvaSlusatelj(int rawSocket);
     QList<Cvor> DohvatiSveCvorove();
 
-    //std::mutex mtx;
-    inline int RT_Len=26;
-}
+signals:
+    void noviOkvir(Okvir okvir);
+    void noviCvor(Cvor cvor);
+
+ private:
+    bool ugasi = false;
+};
 
 typedef std::vector<unsigned char> MACNiz;
-
-
-
 
 
 

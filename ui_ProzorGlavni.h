@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ProzorGlavni.ui'
 **
-** Created by: Qt User Interface Compiler version 5.15.2
+** Created by: Qt User Interface Compiler version 5.9.9
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -38,30 +39,30 @@ public:
     void setupUi(QMainWindow *GlavniProzor)
     {
         if (GlavniProzor->objectName().isEmpty())
-            GlavniProzor->setObjectName(QString::fromUtf8("GlavniProzor"));
+            GlavniProzor->setObjectName(QStringLiteral("GlavniProzor"));
         GlavniProzor->resize(656, 335);
         centralwidget = new QWidget(GlavniProzor);
-        centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
+        centralwidget->setObjectName(QStringLiteral("centralwidget"));
         btnPostaviUMonitorski = new QPushButton(centralwidget);
-        btnPostaviUMonitorski->setObjectName(QString::fromUtf8("btnPostaviUMonitorski"));
+        btnPostaviUMonitorski->setObjectName(QStringLiteral("btnPostaviUMonitorski"));
         btnPostaviUMonitorski->setGeometry(QRect(230, 240, 201, 27));
         label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(30, 10, 101, 19));
         qtTableSucelja = new QTableView(centralwidget);
-        qtTableSucelja->setObjectName(QString::fromUtf8("qtTableSucelja"));
+        qtTableSucelja->setObjectName(QStringLiteral("qtTableSucelja"));
         qtTableSucelja->setGeometry(QRect(20, 30, 621, 192));
         qtTableSucelja->viewport()->setProperty("cursor", QVariant(QCursor(Qt::PointingHandCursor)));
         qtTableSucelja->horizontalHeader()->setCascadingSectionResizes(true);
         GlavniProzor->setCentralWidget(centralwidget);
         menubar = new QMenuBar(GlavniProzor);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
+        menubar->setObjectName(QStringLiteral("menubar"));
         menubar->setGeometry(QRect(0, 0, 656, 24));
         menuWifiAnalizator = new QMenu(menubar);
-        menuWifiAnalizator->setObjectName(QString::fromUtf8("menuWifiAnalizator"));
+        menuWifiAnalizator->setObjectName(QStringLiteral("menuWifiAnalizator"));
         GlavniProzor->setMenuBar(menubar);
         statusbar = new QStatusBar(GlavniProzor);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
+        statusbar->setObjectName(QStringLiteral("statusbar"));
         GlavniProzor->setStatusBar(statusbar);
 
         menubar->addAction(menuWifiAnalizator->menuAction());
@@ -73,10 +74,10 @@ public:
 
     void retranslateUi(QMainWindow *GlavniProzor)
     {
-        GlavniProzor->setWindowTitle(QCoreApplication::translate("GlavniProzor", "WiFi Analizator", nullptr));
-        btnPostaviUMonitorski->setText(QCoreApplication::translate("GlavniProzor", "Postavi u monitorski na\304\215in", nullptr));
-        label->setText(QCoreApplication::translate("GlavniProzor", "Be\305\276i\304\215na su\304\215elja", nullptr));
-        menuWifiAnalizator->setTitle(QCoreApplication::translate("GlavniProzor", "WifiAnalizator", nullptr));
+        GlavniProzor->setWindowTitle(QApplication::translate("GlavniProzor", "WiFi Analizator", Q_NULLPTR));
+        btnPostaviUMonitorski->setText(QApplication::translate("GlavniProzor", "Postavi u monitorski na\304\215in", Q_NULLPTR));
+        label->setText(QApplication::translate("GlavniProzor", "Be\305\276i\304\215na su\304\215elja", Q_NULLPTR));
+        menuWifiAnalizator->setTitle(QApplication::translate("GlavniProzor", "WifiAnalizator", Q_NULLPTR));
     } // retranslateUi
 
 };
