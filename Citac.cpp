@@ -75,11 +75,11 @@
             };
 
             using namespace Procesiranje;
-            Paket pak0 = Procesiranje::OdrediVrstu(bytes);
-            Paket pak1 = Procesiranje::OdrediVrstu(bytes1);
-            Paket pak2 = Procesiranje::OdrediVrstu(bytes2);
-            Paket pak3 = Procesiranje::OdrediVrstu(bytes3);
-            Paket pak4 = Procesiranje::OdrediVrstu(bytesData);
+            Paket pak0 = *(Procesiranje::OdrediVrstu(bytes));
+            Paket pak1 = *(Procesiranje::OdrediVrstu(bytes1));
+            Paket pak2 = *(Procesiranje::OdrediVrstu(bytes2));
+            Paket pak3 = *(Procesiranje::OdrediVrstu(bytes3));
+            Paket pak4 = *(Procesiranje::OdrediVrstu(bytesData));
 
             LEN = 46;
             OdrediAdrese(bytes, pak0);
@@ -99,6 +99,19 @@
     }
 
     void Citac::DodajMAC(std::vector<unsigned char> MAC) {
+        if(MAC.size() != 6) {
+            //TODO: provjeri u kojim je ovo slučajevima
+            return;
+        }else{
+            qDebug() << MAC.size();
+        }
+
+        if (std::count(MACAdr.begin(), MACAdr.end(), MAC))
+                return;
+
+        if(MACAdr.size() > 60)
+            return;
+
         if (!std::count(MACAdr.begin(), MACAdr.end(), MAC) && !JeBroadcastMAC(MAC)) {
             MACAdr.push_back(MAC);
 
@@ -167,7 +180,7 @@
 
                 auto okvir = Procesiranje::ProcesirajPaket(msgLen, buffer);
                 okvir.Vrijeme = (double)timer.elapsed() / 1000;
-                OdrediAdrese(buffer, okvir.paket);
+                OdrediAdrese(buffer, *(okvir.paket));
 
                 emit noviOkvir(okvir);
             }

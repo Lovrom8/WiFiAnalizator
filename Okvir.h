@@ -17,7 +17,7 @@ public:
     MAC_Adr MAC;
     int JacinaSignala;
     std::string VrstaOkvira;
-    Paket paket;
+    Paket *paket;
 };
 
 class OkvirModel : public QAbstractTableModel {

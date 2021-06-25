@@ -159,7 +159,7 @@ namespace Procesiranje {
         return ReadInt<unsigned short>(hdrLen);
     }
 
-    Paket OdrediVrstu(unsigned char* bytes) {
+    Paket* OdrediVrstu(unsigned char* bytes) {
         Paketi paketi;
         auto vrstePaketa = paketi.DohvatiPakete();
 
@@ -173,8 +173,8 @@ namespace Procesiranje {
             }
         }*/
 
-        auto paket = *(std::find_if(std::begin(vrstePaketa), std::end(vrstePaketa), [&](Paket &paket) { return paket.Tip == tip; }));
-        qDebug() << paket.Naziv.c_str();
+        auto paket = *(std::find_if(std::begin(vrstePaketa), std::end(vrstePaketa), [&](Paket* paket) { return (*paket).Tip == tip; }));
+        qDebug() << paket->Naziv.c_str();
         return paket;
     }
 
@@ -197,7 +197,7 @@ namespace Procesiranje {
         Okvir okvir;
 
         okvir.paket = OdrediVrstu(paketPocetak);
-        okvir.VrstaOkvira = okvir.paket.Naziv;
+        okvir.VrstaOkvira = okvir.paket->Naziv;
         okvir.JacinaSignala = OdrediJacinuSignala(paketPocetak);
 
         return okvir;

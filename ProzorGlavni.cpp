@@ -1,4 +1,4 @@
-#include "ProzorGlavni.h"
+﻿#include "ProzorGlavni.h"
 #include "ProzorAnaliza.h"
 #include "ui_ProzorGlavni.h"
 #include "Citac.h"
@@ -18,10 +18,6 @@ GlavniProzor::GlavniProzor(QWidget *parent) : QMainWindow(parent), ui(new Ui::Gl
     ui->qtTableSucelja->show();
 
     connect(ui->btnPostaviUMonitorski, &QPushButton::released, this, &GlavniProzor::StaviUMonitorski_Klik);
-
-    WiFiAnaliza *analiza = new WiFiAnaliza();
-    analiza->show();
-    close();
 }
 
 GlavniProzor::~GlavniProzor()
@@ -34,41 +30,34 @@ void GlavniProzor::StaviUMonitorski_Klik(){
     QString odabranoSucelje = odabraniRed->selectedRows(0).value(0).data().toString();
 
     odabranoSucelje = "wlx00c0caac4467";
-    /*if(odabranoSucelje.size() == 0)
-            return;
+    if(odabranoSucelje.size() == 0)
+        return;
 
     QMessageBox msgBox;
     msgBox.setText(QString("Želite li postaviti sučelje %1 u monitorski način?").arg(odabranoSucelje));
     QPushButton *btnYes = msgBox.addButton(tr("Da"), QMessageBox::YesRole);
-    msgBox.addButton(tr("Ne"), QMessageBox::NoRole);*/
-   // msgBox.exec();
+    msgBox.addButton(tr("Ne"), QMessageBox::NoRole);
+    msgBox.exec();
 
-    //QMessageBox::warning(this, tr("Greška"), QString::number(odabranoSucelje.size()));
-   // if(msgBox.clickedButton() != btnYes )
-    //    return;
+    if(msgBox.clickedButton() != btnYes )
+        return;
 
-
-
-
-    /* OVO */
-    //Citac::PokreniCitanjePrometa(odabranoSucelje.toStdString());
-
-
-
-
-
-
-    /*if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
+    if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
         QMessageBox::warning(this, tr("Greška"),
                              tr("Nije bilo moguće staviti adapter u monitorski način!"));
         return;
     }else{
         QMessageBox::warning(this, tr("Uspjeph"),
                              tr("Adapter je postavljen u monitorski način rada!"));
-    }*/
+    }
 
-   // WiFiAnaliza *analiza = new WiFiAnaliza();
-   // analiza->show();
-   // close();
+    Citac *citac = new Citac();
+    /* OVO */
+    citac->PokreniCitanjePrometa(odabranoSucelje.toStdString());
+
+    WiFiAnaliza *analiza = new WiFiAnaliza();
+    analiza->show();
+    analiza->PokreniCitanje(odabranoSucelje.toStdString());
+    close();
 }
 

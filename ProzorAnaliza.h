@@ -21,6 +21,8 @@ public:
     explicit WiFiAnaliza(QWidget *parent = nullptr);
     ~WiFiAnaliza();
     void PostaviSucelje(std::string);
+    void PokreniCitanje(std::string adapter);
+    void StartStop_Klik();
 
 public slots:
     void dodajOkvir(Okvir okvir);

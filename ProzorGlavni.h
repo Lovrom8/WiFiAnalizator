@@ -2,6 +2,7 @@
 #define PROZORGLAVNI_H
 
 #include <QMainWindow>
+#include <QMessageBox>
 #include "WiFiSucelja.h"
 
 QT_BEGIN_NAMESPACE

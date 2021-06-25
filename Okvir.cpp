@@ -15,7 +15,7 @@ int OkvirModel::rowCount(const QModelIndex &parent) const {
 
 int OkvirModel::columnCount(const QModelIndex &parent) const {
     Q_UNUSED(parent);
-    return 2;
+    return 3;
 }
 
 QVariant OkvirModel::data(const QModelIndex &index, int role) const{
@@ -26,6 +26,8 @@ QVariant OkvirModel::data(const QModelIndex &index, int role) const{
           return okviri[index.row()].Vrijeme;
       else  if(index.column() == 1)
           return QString::fromStdString(okviri[index.row()].VrstaOkvira);
+      else if(index.column() == 2)
+          return QString::number(okviri[index.row()].JacinaSignala);
 
       return QVariant();
 }
@@ -38,6 +40,8 @@ QVariant OkvirModel::headerData(int section, Qt::Orientation orientation, int ro
         return QString("Vrijeme");
     else if(section == 1)
         return QString("Vrsta okvira");
+    else if(section == 2)
+        return QString("Jačina signala");
 
     return QVariant();
 }

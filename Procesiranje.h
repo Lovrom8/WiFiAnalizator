@@ -66,7 +66,7 @@ namespace Procesiranje
          bool JeBroadcastMAC(std::vector<unsigned char> MAC);
          void DodajMAC(std::vector<unsigned char> MAC);
 
-         Paket OdrediVrstu(unsigned char* bytes);
+         Paket* OdrediVrstu(unsigned char* bytes);
          Okvir ProcesirajPaket(int len, unsigned char* paket);
 
          std::vector<unsigned char> Split(unsigned char* bytes, int from, int len);
