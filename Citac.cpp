@@ -93,26 +93,28 @@
             OdrediAdrese(bytesData, pak4);
     }
 
-    std::vector<std::vector<unsigned char>> MACAdr;
+    std::vector<MACNiz> MACAdr;
     bool JeBroadcastMAC(std::vector<unsigned char> MAC) {
         return std::equal(MAC.begin() + 1, MAC.end(), MAC.begin()) && MAC[0] == 0xFF;
     }
 
+    int emitted = 0;
     void Citac::DodajMAC(std::vector<unsigned char> MAC) {
         if(MAC.size() != 6) {
             //TODO: provjeri u kojim je ovo slučajevima
             return;
-        }else{
-            qDebug() << MAC.size();
         }
+       // qDebug() << "Lol: ";
 
-        if (std::count(MACAdr.begin(), MACAdr.end(), MAC))
-                return;
+        //if(MACAdr.size() > 60)
+         //   return;
 
-        if(MACAdr.size() > 60)
-            return;
+        /*std::sort(MACAdr.begin(), MACAdr.end());
+        int uniqueCount = std::unique(MACAdr.begin(), MACAdr.end()) - MACAdr.begin();
+        qDebug() << uniqueCount;
+*/
 
-        if (!std::count(MACAdr.begin(), MACAdr.end(), MAC) && !JeBroadcastMAC(MAC)) {
+        if (std::find(MACAdr.begin(), MACAdr.end(), MAC) == std::end(MACAdr) && !JeBroadcastMAC(MAC)) {
             MACAdr.push_back(MAC);
 
             Cvor cvor;
@@ -124,7 +126,12 @@
 
            cvor.MAC_Adresa.chop(1);
 
+                   qDebug() << cvor.MAC_Adresa;
             emit(noviCvor(cvor));
+                   emitted++;
+                   qDebug() << "Emmited. ";
+                   qDebug() << emitted << " " << MACAdr.size();
+
         }
     }
 
@@ -175,7 +182,7 @@
             if((msgLen = recvfrom(rawSocket, buffer, 65536, 0, NULL, NULL)) == -1){
                 qDebug() << "Socket recv() greska: " << strerror(errno);
             }else{
-                qDebug() << msgLen;
+                //qDebug() << msgLen;
                 buffer[msgLen-1] = '\0';
 
                 auto okvir = Procesiranje::ProcesirajPaket(msgLen, buffer);

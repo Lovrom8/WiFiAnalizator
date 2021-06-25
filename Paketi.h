@@ -136,6 +136,8 @@ public:
         paketi.push_back(new DataPaket("Reserved", 0b11011000));
         paketi.push_back(new DataPaket("QoS CF-Poll (no data)", 0b11101000));
         paketi.push_back(new DataPaket("QoS CF-ACK + CF-Poll (no data)", 0b11111000));
+
+        paketi.push_back(new DataPaket("Nedefiniran", 0b0000000000001));
     }
 
 

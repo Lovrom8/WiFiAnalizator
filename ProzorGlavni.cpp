@@ -37,10 +37,10 @@ void GlavniProzor::StaviUMonitorski_Klik(){
     msgBox.setText(QString("Želite li postaviti sučelje %1 u monitorski način?").arg(odabranoSucelje));
     QPushButton *btnYes = msgBox.addButton(tr("Da"), QMessageBox::YesRole);
     msgBox.addButton(tr("Ne"), QMessageBox::NoRole);
-    msgBox.exec();
+    //msgBox.exec();
 
-    if(msgBox.clickedButton() != btnYes )
-        return;
+    //if(msgBox.clickedButton() != btnYes )
+     //   return;
 
     if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
         QMessageBox::warning(this, tr("Greška"),
