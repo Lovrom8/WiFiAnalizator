@@ -11,6 +11,7 @@
 #include "Cvor.h"
 #include "Citac.h"
 #include "Okvir.h"
+#include "CvorPromet.h"
 
 #include <map>
 
@@ -38,7 +39,7 @@ signals:
 public slots:
     void dodajOkvir(Okvir okvir);
     void dodajCvor(Cvor cvor);
-    void osvjeziStat(std::vector<Okvir> _okviri);
+    void osvjeziStat(const std::vector<Okvir> &_okviri);
     void osjveziTimerStat();
 
 private:
@@ -46,8 +47,10 @@ private:
     QString nazivSucelja;
     OkvirModel *ModelOkviri;
     CvorModel *ModelCvorovi;
+    CvorPrometModel *ModelPromet;
     QList<Okvir> okviri;
     QList<Cvor> cvorovi;
+    QList<CvorPromet> promet;
     QTimer *statTimer;
 
     QBarSet *setData;
@@ -56,6 +59,9 @@ private:
     QChartView *chartView;
     QChart *chart;
     QBarSeries *series;
+
+    void OsvjeziGraf(const std::vector<Okvir> &_okviri);
+    void OsvjeziPromet(const std::vector<Okvir> &_okviri);
 };
 
 #endif // PROZORANALIZA_H

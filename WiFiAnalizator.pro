@@ -12,6 +12,7 @@ CONFIG += c++17
 SOURCES += \
     Citac.cpp \
     Cvor.cpp \
+    CvorPromet.cpp \
     Okvir.cpp \
     Procesiranje.cpp \
     ProzorAnaliza.cpp \
@@ -22,6 +23,7 @@ SOURCES += \
 HEADERS += \
     Citac.h \
     Cvor.h \
+    CvorPromet.h \
     Okvir.h \
     Paketi.h \
     Procesiranje.h \

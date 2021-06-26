@@ -1,7 +1,10 @@
 #pragma once
+
 #include <QAbstractTableModel>
-#include <string>
 #include <QDebug>
+
+#include <string>
+
 
 class Cvor {
 public:

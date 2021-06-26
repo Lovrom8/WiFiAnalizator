@@ -7,7 +7,6 @@
 #include "net/ethernet.h"
 #include "sys/ioctl.h"
 #include "arpa/inet.h"
-#include "ProzorAnaliza.h"
 
 #include "string.h"
 #include <string>
@@ -20,6 +19,7 @@
 #include <Okvir.h>
 #include <Paketi.h>
 #include "Procesiranje.h"
+#include "ProzorAnaliza.h"
 
 #include <QDebug>
 #include <QElapsedTimer>

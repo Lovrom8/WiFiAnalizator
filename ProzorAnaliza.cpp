@@ -23,6 +23,15 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     ui->tableOkviri->setModel(ModelOkviri);
     ui->tableOkviri->show();
 
+    /* TABLICA PROMET */
+
+    ModelPromet = new CvorPrometModel(this);
+    ModelPromet->populateData(promet);
+
+    ui->tableBrojPaketa->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->tableBrojPaketa->setModel(ModelPromet);
+    ui->tableBrojPaketa->show();
+
     /* OSTALO */
     connect(ui->btnStartStop, &QPushButton::released, this, &WiFiAnaliza::StartStop_Klik);
 
@@ -62,6 +71,7 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->resize(600, 400);
     chartView->setParent(ui->groupBoxStatistika);
+    chartView->move(35, 30);
 }
 
 
@@ -93,12 +103,15 @@ void WiFiAnaliza::PostaviSucelje(QString _nazivSucelja){
 void WiFiAnaliza::dodajOkvir(Okvir okvir) {
     if(ModelOkviri != NULL)
      ModelOkviri->dodajOkvir(okvir);
+
+    if(ModelPromet != NULL)
+        ModelPromet->dodajPromet(okvir);
 }
 
-void WiFiAnaliza::osvjeziStat(std::vector<Okvir> _okviri) {
-    int brojData =  std::count_if(std::begin(_okviri), std::end(_okviri), [&](Okvir &okvir) { return okvir.paket && okvir.paket->Vrsta == "Data"; });
-    int brojMgmt = std::count_if(std::begin(_okviri), std::end(_okviri), [&](Okvir &okvir) { return okvir.paket && okvir.paket->Vrsta == "Management"; });
-    int brojControl = std::count_if(std::begin(_okviri), std::end(_okviri), [&](Okvir &okvir) { return okvir.paket && okvir.paket->Vrsta == "Control"; });
+void WiFiAnaliza::OsvjeziGraf(const std::vector<Okvir> &_okviri) {
+    int brojData =  std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Data"; });
+    int brojMgmt = std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Management"; });
+    int brojControl = std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Control"; });
 
     qDebug() << "lmao" << _okviri.size() << " " << brojData << " " << brojMgmt << " " << brojControl;
 
@@ -120,10 +133,11 @@ void WiFiAnaliza::osvjeziStat(std::vector<Okvir> _okviri) {
     *setControl << brojControl;
     chart->addSeries( series );
 
-    //chart->axisX()->setTitleVisible()
     chart->axisY()->setRange(0, std::max({brojData, brojMgmt, brojControl}));
     chartView->update();
+}
 
+void WiFiAnaliza::OsvjeziPromet(const std::vector<Okvir> &_okviri) {
     std::map<QString, int> paketiPoCvoru;
     for(Okvir okvir : _okviri) {
         for(QString macAdresa :  okvir.macAdrese) {
@@ -137,6 +151,11 @@ void WiFiAnaliza::osvjeziStat(std::vector<Okvir> _okviri) {
             }
         }
     }
+}
+
+void WiFiAnaliza::osvjeziStat(const std::vector<Okvir> &_okviri) {
+    OsvjeziGraf(_okviri);
+    OsvjeziPromet(_okviri);
 }
 
 void WiFiAnaliza::dodajCvor(Cvor cvor)  {

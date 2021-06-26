@@ -185,7 +185,7 @@ void Citac::DretvaSlusatelj(int rawSocket){
             qDebug() << "Socket recv() greska: " << strerror(errno);
         }else{
             //qDebug() << msgLen;
-            buffer[msgLen-1] = '\0';
+            buffer[msgLen] = '\0';
 
             auto okvir = Procesiranje::ProcesirajPaket(msgLen, buffer);
             okvir.Vrijeme = (double)timer.elapsed() / 1000;

@@ -1,6 +1,8 @@
 #pragma once
+
 #include <string>
 #include <vector>
+
 #include <QObject>
 
 enum Adrese { // Ne zanima nas koja je vrsta adrese, već samo ima li je u određenoj vrsti okvira

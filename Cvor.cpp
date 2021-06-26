@@ -44,8 +44,6 @@ bool CvorModel::dodajCvor(Cvor cvor, const QModelIndex &parent)
     cvorovi.append(cvor);
     endInsertRows();
 
-    qDebug() << cvorovi.count();
-
     return true;
 }
 
