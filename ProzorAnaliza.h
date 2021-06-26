@@ -3,9 +3,17 @@
 
 #include <QAbstractTableModel>
 #include <QMainWindow>
+#include <QtCharts>
+#include <QChartView>
+#include <QLineSeries>
+#include <QTimer>
+
 #include "Cvor.h"
 #include "Citac.h"
 #include "Okvir.h"
+
+#include <map>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,21 +28,34 @@ class WiFiAnaliza : public QMainWindow
 public:
     explicit WiFiAnaliza(QWidget *parent = nullptr);
     ~WiFiAnaliza();
-    void PostaviSucelje(std::string);
-    void PokreniCitanje(std::string adapter);
+    void PostaviSucelje(QString);
+    void PokreniCitanje(QString adapter);
     void StartStop_Klik();
+
+signals:
+    void osvjeziStatReq();
 
 public slots:
     void dodajOkvir(Okvir okvir);
     void dodajCvor(Cvor cvor);
+    void osvjeziStat(std::vector<Okvir> _okviri);
+    void osjveziTimerStat();
 
 private:
     Ui::WiFiAnaliza *ui;
-    std::string nazivSucelja;
+    QString nazivSucelja;
     OkvirModel *ModelOkviri;
     CvorModel *ModelCvorovi;
-        QList<Okvir> okviri;
-        QList<Cvor> cvorovi;
+    QList<Okvir> okviri;
+    QList<Cvor> cvorovi;
+    QTimer *statTimer;
+
+    QBarSet *setData;
+    QBarSet *setMgmt;
+    QBarSet *setControl;
+    QChartView *chartView;
+    QChart *chart;
+    QBarSeries *series;
 };
 
 #endif // PROZORANALIZA_H

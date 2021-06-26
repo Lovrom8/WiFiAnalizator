@@ -42,7 +42,7 @@ void GlavniProzor::StaviUMonitorski_Klik(){
     //if(msgBox.clickedButton() != btnYes )
      //   return;
 
-    if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje.toStdString())){
+    if(!WifiSucelja::PostaviUMonitorskiNacin(odabranoSucelje)){
         QMessageBox::warning(this, tr("Greška"),
                              tr("Nije bilo moguće staviti adapter u monitorski način!"));
         return;
@@ -51,13 +51,13 @@ void GlavniProzor::StaviUMonitorski_Klik(){
                              tr("Adapter je postavljen u monitorski način rada!"));
     }
 
-    Citac *citac = new Citac();
-    /* OVO */
-    citac->PokreniCitanjePrometa(odabranoSucelje.toStdString());
+    // PAZI DA NE ZOVEŠ DUPLO, INAČE SHIT GOES HAM :((((((
+    /*Citac *citac = new Citac();
+    citac->PokreniCitanjePrometa(odabranoSucelje.toStdString());*/
 
     WiFiAnaliza *analiza = new WiFiAnaliza();
     analiza->show();
-    analiza->PokreniCitanje(odabranoSucelje.toStdString());
+    analiza->PokreniCitanje(odabranoSucelje);
     close();
 }
 

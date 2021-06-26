@@ -20,11 +20,11 @@
 #include <mutex>
 
 namespace WifiSucelja {
-    bool JeBezicni(std::string naziv);
+    bool JeBezicni(QString naziv);
     QList<QString> GetSvaSucelja();
     QList<Cvor> DohvatiCvorove();
 
-    bool PostaviUMonitorskiNacin(std::string uredaj="");
+    bool PostaviUMonitorskiNacin(QString uredaj="");
 
     unsigned int if_nametoindex(const char *ifname);
 }

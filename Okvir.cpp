@@ -51,5 +51,6 @@ bool OkvirModel::dodajOkvir(Okvir okvir, const QModelIndex &parent)
     beginInsertRows(parent, okviri.count(), okviri.count());
     okviri.append(okvir);
     endInsertRows();
+
     return true;
 }

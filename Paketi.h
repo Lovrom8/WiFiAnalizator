@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <QObject>
 
 enum Adrese { // Ne zanima nas koja je vrsta adrese, već samo ima li je u određenoj vrsti okvira
     Ima,
@@ -32,7 +33,9 @@ struct AdrPolja {
     }
 };
 
-class Paket {
+class Paket
+{
+
 public:
     std::string Naziv;
     std::string Vrsta;

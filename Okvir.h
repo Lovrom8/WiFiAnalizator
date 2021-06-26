@@ -3,6 +3,7 @@
 
 #include <string>
 #include <QAbstractTableModel>
+#include <QDebug>
 
 struct MAC_Adr{
     std::string Adr1;
@@ -17,6 +18,7 @@ public:
     MAC_Adr MAC;
     int JacinaSignala;
     std::string VrstaOkvira;
+    std::vector<QString> macAdrese;
     Paket *paket;
 };
 
@@ -38,3 +40,6 @@ public:
 private:
        QList<Okvir> okviri;
 };
+
+Q_DECLARE_METATYPE(Okvir);
+

@@ -23,31 +23,51 @@
 
 #include <QDebug>
 #include <QElapsedTimer>
+#include <QWaitCondition>
+#include <QMutex>
+#include <QThread>
+#include <QTimer>
+
+typedef std::vector<unsigned char> MACNiz;
+typedef std::vector<Okvir> ListaOkvira;
 
 class Citac : public QObject {
     Q_OBJECT
 
 public:
     void pokreni();
-    int OtvoriSoket(std::string nazivSucelja);
-    void PokreniCitanjePrometa(std::string nazivSucelja);
-    void UgasiCitanjePrometa(std::string nazivSucelja);
+    int OtvoriSoket(QString nazivSucelja);
+    void PokreniCitanjePrometa(QString nazivSucelja);
+    void UgasiCitanjePrometa(QString nazivSucelja);
     void DretvaSlusatelj(int rawSocket);
+    void DretvaCitatelj();
     QList<Cvor> DohvatiSveCvorove();
 
 signals:
     void noviOkvir(Okvir okvir);
     void noviCvor(Cvor cvor);
+    void osvjeziStatResp(std::vector<Okvir> _okviri);
+
+public slots    :
+     void osvjeziStatCitac();
 
  private:
-    void OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa);
-    void DodajMAC(std::vector<unsigned char> MAC);
+    std::vector<QString> OdrediAdrese(unsigned char* bytes, Paket vrstaPaketa);
+    QString DodajMAC(MACNiz MAC);
+    std::vector<Okvir> sviOkviri;
     void Testiraj();
     bool ugasi = false;
+    std::vector<MACNiz> MACAdr;
     QElapsedTimer timer;
+    QTimer* statTimer;
+
+    QWaitCondition bufferNotEmpty;
+    QWaitCondition bufferNotFull;
+    QMutex mutex;
+    int numUsedBytes = 0;
+
 };
 
-typedef std::vector<unsigned char> MACNiz;
 
 
 

@@ -1,23 +1,20 @@
 #include "WiFiSucelja.h"
 
 namespace WifiSucelja {
-    bool JeBezicni(std::string naziv){
+    bool JeBezicni(QString naziv){
         int sockfd = -1;
 
         //auto *pwrq = new iwreq();
         //strncpy(pwrq->ifr_ifrn.ifrn_name, naziv.c_str(), IFNAMSIZ);
 
         iwreq pwrq;
-        strncpy(pwrq.ifr_ifrn.ifrn_name, naziv.c_str(), IFNAMSIZ);
+        strncpy(pwrq.ifr_ifrn.ifrn_name, naziv.toStdString().c_str(), IFNAMSIZ);
 
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
             return false;
         }
 
         if(ioctl(sockfd, SIOCGIWNAME, &pwrq) != -1){
-            //if(protocol)
-            //    strncpy(protocol, pwrq->u.name, IFNAMSIZ);
-
             close(sockfd);
             return true;
         }
@@ -49,11 +46,11 @@ namespace WifiSucelja {
         return nazivi;
     }
 
-    static int PostaviZastavice(std::string naziv, int flags){
+    static int PostaviZastavice(QString naziv, int flags){
         int sockfd = -1;
 
         struct ifreq ifr;
-        strncpy(ifr.ifr_ifrn.ifrn_name, naziv.c_str(), IFNAMSIZ);
+        strncpy(ifr.ifr_ifrn.ifrn_name, naziv.toStdString().c_str(), IFNAMSIZ);
 
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
             return false;
@@ -70,11 +67,11 @@ namespace WifiSucelja {
         return false;
     }
 
-    int UzmiZastavice(std::string naziv, int* flags){
+    int UzmiZastavice(QString naziv, int* flags){
         int sockfd = -1;
 
         struct ifreq ifr;
-        strncpy(ifr.ifr_ifrn.ifrn_name, naziv.c_str(), IFNAMSIZ);
+        strncpy(ifr.ifr_ifrn.ifrn_name, naziv.toStdString().c_str(), IFNAMSIZ);
 
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
             return false;
@@ -88,7 +85,7 @@ namespace WifiSucelja {
         return true;
     }
 
-    void UgasiSucelje(std::string uredaj){
+    void UgasiSucelje(QString uredaj){
         int zastavice;
         UzmiZastavice(uredaj, &zastavice);
 
@@ -99,7 +96,7 @@ namespace WifiSucelja {
         PostaviZastavice(uredaj, ~zastavice);
     }
 
-    void UpaliSucelje(std::string uredaj){
+    void UpaliSucelje(QString uredaj){
         int zastavice;
         UzmiZastavice(uredaj, &zastavice);
 
@@ -110,11 +107,11 @@ namespace WifiSucelja {
         PostaviZastavice(uredaj, 0x1003);
     }
 
-    bool Postavi(std::string uredaj){
+    bool Postavi(QString uredaj){
         int sockfd = -1;
 
         iwreq wrq;
-        strncpy(wrq.ifr_ifrn.ifrn_name, uredaj.c_str(), IFNAMSIZ);
+        strncpy(wrq.ifr_ifrn.ifrn_name, uredaj.toStdString().c_str(), IFNAMSIZ);
 
         if((sockfd = socket(AF_INET, SOCK_STREAM, 0)) == -1){
             return false;
@@ -132,33 +129,12 @@ namespace WifiSucelja {
         }
     }
 
-    bool PostaviUMonitorskiNacin(std::string uredaj){
+    bool PostaviUMonitorskiNacin(QString uredaj){
         UgasiSucelje(uredaj);
         bool uspjeh = Postavi(uredaj);
         UpaliSucelje(uredaj);
 
         return uspjeh;
-    }
-
-    // Definirano ovdje identičnu funkciju onoj iz kernela
-    // jer includanje linux/wireless.h istovremeno s linux/if.h u kojem se nalazi if_nametoindex
-    // stvara probleme sa redefinicijama
-    unsigned int if_nametoindex(const char *ifname)
-    {
-        int index;
-        int ctl_sock;
-        struct ifreq ifr;
-        memset(&ifr, 0, sizeof(struct ifreq));
-        strncpy(ifr.ifr_name, ifname, IFNAMSIZ);
-        ifr.ifr_name[IFNAMSIZ - 1] = 0;
-        index = 0;
-        if ((ctl_sock = socket(AF_INET, SOCK_DGRAM, 0)) >= 0) {
-            if (ioctl(ctl_sock, SIOCGIFINDEX, &ifr) >= 0) {
-                index = ifr.ifr_ifindex;
-            }
-            close(ctl_sock);
-        }
-        return index;
     }
 }
 

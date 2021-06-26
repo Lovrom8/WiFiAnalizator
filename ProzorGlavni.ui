@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>339</width>
-    <height>305</height>
+    <height>274</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -57,23 +57,6 @@
     </attribute>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>339</width>
-     <height>24</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuWifiAnalizator">
-    <property name="title">
-     <string>WifiAnalizator</string>
-    </property>
-   </widget>
-   <addaction name="menuWifiAnalizator"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

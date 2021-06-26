@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>677</width>
-    <height>494</height>
+    <width>1275</width>
+    <height>889</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Analiza</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -86,22 +86,55 @@
      <string>Započni čitanje</string>
     </property>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>677</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuWiFi_Analiza">
-    <property name="title">
-     <string>WiFi Analiza</string>
+   <widget class="Line" name="line">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>460</y>
+      <width>651</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <addaction name="menuWiFi_Analiza"/>
+   <widget class="QGroupBox" name="groupBoxStatistika">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>480</y>
+      <width>1201</width>
+      <height>381</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Statistika</string>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>20</y>
+       <width>67</width>
+       <height>19</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Broj paketa po čvoru</string>
+     </property>
+    </widget>
+    <widget class="QTableView" name="tableBrojPaketa">
+     <property name="geometry">
+      <rect>
+       <x>680</x>
+       <y>40</y>
+       <width>471</width>
+       <height>181</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

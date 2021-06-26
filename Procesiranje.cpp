@@ -188,12 +188,12 @@ Paket* OdrediVrstu(unsigned char* bytes) {
 
 Okvir ProcesirajPaket(int len, unsigned char* paket){
     unsigned char *paketPocetak = paket;
-    paket = paket + OdrediDuljinuRT(paket);   //Prvih 26 bajtova je RADIOTAP HEADER (bar za ovaj adapter)
+    //paket = paket + OdrediDuljinuRT(paket);   //Prvih 26 bajtova je RADIOTAP HEADER (bar za ovaj adapter)
 
     LEN = len;
 
-    unsigned char frameControlPrviBajt = paket[0]; // protocol version (b0 i b1), type (b2 i b3), subtype (b4,5,6 i 7)
-    unsigned char frameControlDrugiBajt = paket[1];
+    //unsigned char frameControlPrviBajt = paket[0]; // protocol version (b0 i b1), type (b2 i b3), subtype (b4,5,6 i 7)
+    //unsigned char frameControlDrugiBajt = paket[1];
 
     //qDebug() << "Prvi FC bajt:" << QString::number(frameControlPrviBajt, 2);
     //qDebug() << QString::number(frameControlDrugiBajt, 2);
@@ -205,7 +205,8 @@ Okvir ProcesirajPaket(int len, unsigned char* paket){
     Okvir okvir;
 
     okvir.paket = OdrediVrstu(paketPocetak);
-    okvir.VrstaOkvira = okvir.paket->Naziv;
+    if(okvir.paket) //JIC
+        okvir.VrstaOkvira = okvir.paket->Naziv;
     okvir.JacinaSignala = OdrediJacinuSignala(paketPocetak);
 
     return okvir;

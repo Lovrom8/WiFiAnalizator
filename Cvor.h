@@ -1,6 +1,7 @@
 #pragma once
 #include <QAbstractTableModel>
 #include <string>
+#include <QDebug>
 
 class Cvor {
 public:
@@ -25,3 +26,5 @@ public:
 private:
        QList<Cvor> cvorovi;
 };
+
+Q_DECLARE_METATYPE(Cvor);
