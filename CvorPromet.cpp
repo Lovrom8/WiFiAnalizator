@@ -44,21 +44,21 @@ QVariant CvorPrometModel::headerData(int section, Qt::Orientation orientation, i
 
 bool CvorPrometModel::dodajPromet(Okvir okvir, const QModelIndex &parent)
 {
-    beginInsertRows(parent, promet.count(), promet.count());
-
     for(QString mac : okvir.macAdrese) {
         auto cvor = std::find_if(std::begin(promet), std::end(promet), [&](CvorPromet &cvorInfo) { return cvorInfo.MAC == mac; });
         if(cvor != promet.end()) {
             cvor->BrojPaketa++;
         }else{
+            beginInsertRows(parent, promet.count(), promet.count());
+
             CvorPromet noviCvor;
             noviCvor.BrojPaketa = 1;
             noviCvor.MAC = mac;
             promet.append(noviCvor);
+
+            endInsertRows();
         }
     }
-
-    endInsertRows();
 
     return true;
 }

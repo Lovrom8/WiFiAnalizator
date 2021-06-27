@@ -28,8 +28,12 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     ModelPromet = new CvorPrometModel(this);
     ModelPromet->populateData(promet);
 
+    QSortFilterProxyModel *proxy = new QSortFilterProxyModel(this);
+    proxy->setSourceModel(ModelPromet);
+
     ui->tableBrojPaketa->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->tableBrojPaketa->setModel(ModelPromet);
+    ui->tableBrojPaketa->setModel(proxy);
+    ui->tableBrojPaketa->setSortingEnabled(true);
     ui->tableBrojPaketa->show();
 
     /* OSTALO */
