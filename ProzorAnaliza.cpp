@@ -96,7 +96,8 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     chartJacine->addSeries(seriesJacine);
     chartJacine->createDefaultAxes();
     chartJacine->setTitle("Jačine signala za čvor");
-
+    chartJacine->axisX()->setRange(0, 20);
+    chartJacine->axisY()->setRange(-100, 0);
     chartViewJacine = new QChartView(chartJacine);
     chartViewJacine->setRenderHint(QPainter::Antialiasing);
     chartViewJacine->resize(600, 450);
@@ -173,41 +174,53 @@ void WiFiAnaliza::OsvjeziGrafJacine(const std::vector<Okvir> &_okviri) {
     seriesJacine = new QLineSeries(this);
 
     QModelIndex index = ui->qListViewCvorovi->currentIndex();
-    QString itemText = index.data(Qt::DisplayRole).toString();
-    qDebug() << itemText;
+    QString odabraniCvor = index.data(Qt::DisplayRole).toString();
 
-    if(itemText == "")
+    if(odabraniCvor == "")
         return;
+
+    chartJacine->setTitle("Jačine signala za čvor " + odabraniCvor);
 
     short brPrikazanih = 0;
 
-    [&] {
+    //[&] {
     for (auto it = _okviri.end(); it != _okviri.begin();)
     {
         --it;
 
-            for(QString mac:(*it).macAdrese){
-                if (itemText == mac)
-                {
-                    seriesJacine->append(brPrikazanih, (*it).JacinaSignala*-1);
-                    brPrikazanih++;
+        auto okvir = *(it);
 
-                    qDebug() << (*it).JacinaSignala*-1;
-                    if(brPrikazanih == 10) {
-                        qDebug() << "dx";
-                        return;
-                    }
-                }
+        QString sourceMAC = "-1"; // Određena polja reprezentiraju Source MAC, pretpostavljamo da je Source MAC jednak Transmitter Addressu
+        if(okvir.paket->Vrsta == "Control") {
+            if(okvir.paket->AdresnaPolja.Adr2 == '1') { // Za Control samo - ako nema Adr2, onda nema niti Source Address
+                sourceMAC = okvir.macAdrese[1];
             }
+        }
+        else if(okvir.paket->Vrsta == "Management") { // Fiksna struktura za sve Mgmt pakete, TA je na trećem mjestu
+            sourceMAC = okvir.macAdrese[2];
+        }
+        else if(okvir.paket->Vrsta == "Data") {
+            sourceMAC = okvir.macAdrese[1]; // Za Data općenito TA ulogu ima drugo polje, a njega imaju svi Data okviri
+        }
+
+        if (odabraniCvor == sourceMAC)
+        {
+            seriesJacine->append(brPrikazanih, (*it).JacinaSignala);
+            brPrikazanih++;
+
+            qDebug() << (*it).JacinaSignala;
+            if(brPrikazanih == 20) {
+                qDebug() << "dx";
+
+                //return;
+                break;
+            }
+        }
     }
-    }();
+
+    // }();
 
     chartJacine->addSeries(seriesJacine);
-
-    /*chartJacine->axisX()->setRange(0, 10);
-    chartJacine->axisY()->setRange(0, 100);
-     yAxis->setRange(0, 100);
-    chartViewJacine->update();*/
 }
 
 void WiFiAnaliza::osvjeziStat(const std::vector<Okvir> &_okviri) {
