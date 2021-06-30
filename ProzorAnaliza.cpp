@@ -45,7 +45,7 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
     statTimer->start();
     connect(statTimer, SIGNAL(timeout()), this, SLOT(osjveziTimerStat()));
 
-    /* GRAFOVI */
+    /* GRAF PO VRSTI */
     setData = new QBarSet("Data");
     setMgmt = new QBarSet("Management");
     setControl = new QBarSet("Control");
@@ -73,9 +73,35 @@ WiFiAnaliza::WiFiAnaliza(QWidget *parent) : QMainWindow(parent), ui(new Ui::WiFi
 
     chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->resize(600, 400);
+    chartView->resize(600, 450);
     chartView->setParent(ui->groupBoxStatistika);
-    chartView->move(35, 30);
+    chartView->move(20, 30);
+
+    /* GRAF PO JACINI */
+    seriesJacine = new QLineSeries();
+
+    seriesJacine->append(1, 30);
+    seriesJacine->append(2, 40);
+    seriesJacine->append(3, 20);
+    seriesJacine->append(4, 10);
+    seriesJacine->append(5, 70);
+    seriesJacine->append(6, 50);
+    seriesJacine->append(7, 40);
+    seriesJacine->append(8, 90);
+    seriesJacine->append(9, 20);
+
+
+    chartJacine = new QChart();
+    chartJacine->legend()->hide();
+    chartJacine->addSeries(seriesJacine);
+    chartJacine->createDefaultAxes();
+    chartJacine->setTitle("Jačine signala za čvor");
+
+    chartViewJacine = new QChartView(chartJacine);
+    chartViewJacine->setRenderHint(QPainter::Antialiasing);
+    chartViewJacine->resize(600, 450);
+    chartViewJacine->setParent(ui->groupBoxStatistika);
+    chartViewJacine->move(635, 30);
 }
 
 
@@ -86,7 +112,7 @@ WiFiAnaliza::~WiFiAnaliza()
 }
 
 void WiFiAnaliza::osjveziTimerStat() {
-        emit osvjeziStatReq();
+    emit osvjeziStatReq();
 }
 
 void WiFiAnaliza::PokreniCitanje(QString adapter){
@@ -106,18 +132,18 @@ void WiFiAnaliza::PostaviSucelje(QString _nazivSucelja){
 
 void WiFiAnaliza::dodajOkvir(Okvir okvir) {
     if(ModelOkviri != NULL)
-     ModelOkviri->dodajOkvir(okvir);
+        ModelOkviri->dodajOkvir(okvir);
 
     if(ModelPromet != NULL)
         ModelPromet->dodajPromet(okvir);
 }
 
-void WiFiAnaliza::OsvjeziGraf(const std::vector<Okvir> &_okviri) {
+void WiFiAnaliza::OsvjeziGrafVrste(const std::vector<Okvir> &_okviri) {
     int brojData =  std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Data"; });
     int brojMgmt = std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Management"; });
     int brojControl = std::count_if(std::begin(_okviri), std::end(_okviri), [](Okvir okvir) { return okvir.paket && okvir.paket->Vrsta == "Control"; });
 
-    qDebug() << "lmao" << _okviri.size() << " " << brojData << " " << brojMgmt << " " << brojControl;
+    //qDebug() << "Broj paketa: " << _okviri.size() << " " << brojData << " " << brojMgmt << " " << brojControl;
 
     series->remove(setData);
     series->remove(setMgmt);
@@ -141,30 +167,57 @@ void WiFiAnaliza::OsvjeziGraf(const std::vector<Okvir> &_okviri) {
     chartView->update();
 }
 
-void WiFiAnaliza::OsvjeziPromet(const std::vector<Okvir> &_okviri) {
-    std::map<QString, int> paketiPoCvoru;
-    for(Okvir okvir : _okviri) {
-        for(QString macAdresa :  okvir.macAdrese) {
-            if(paketiPoCvoru.count(macAdresa))
-            {
-                paketiPoCvoru[macAdresa]++;
+void WiFiAnaliza::OsvjeziGrafJacine(const std::vector<Okvir> &_okviri) {
+    chartJacine->removeSeries(seriesJacine);
+
+    seriesJacine = new QLineSeries(this);
+
+    QModelIndex index = ui->qListViewCvorovi->currentIndex();
+    QString itemText = index.data(Qt::DisplayRole).toString();
+    qDebug() << itemText;
+
+    if(itemText == "")
+        return;
+
+    short brPrikazanih = 0;
+
+    [&] {
+    for (auto it = _okviri.end(); it != _okviri.begin();)
+    {
+        --it;
+
+            for(QString mac:(*it).macAdrese){
+                if (itemText == mac)
+                {
+                    seriesJacine->append(brPrikazanih, (*it).JacinaSignala*-1);
+                    brPrikazanih++;
+
+                    qDebug() << (*it).JacinaSignala*-1;
+                    if(brPrikazanih == 10) {
+                        qDebug() << "dx";
+                        return;
+                    }
+                }
             }
-            else
-            {
-                paketiPoCvoru[macAdresa] = 1;
-            }
-        }
     }
+    }();
+
+    chartJacine->addSeries(seriesJacine);
+
+    /*chartJacine->axisX()->setRange(0, 10);
+    chartJacine->axisY()->setRange(0, 100);
+     yAxis->setRange(0, 100);
+    chartViewJacine->update();*/
 }
 
 void WiFiAnaliza::osvjeziStat(const std::vector<Okvir> &_okviri) {
-    OsvjeziGraf(_okviri);
-    OsvjeziPromet(_okviri);
+    OsvjeziGrafJacine(_okviri);
+    OsvjeziGrafVrste(_okviri);
 }
 
 void WiFiAnaliza::dodajCvor(Cvor cvor)  {
-   if(ModelCvorovi != NULL)
-          ModelCvorovi->dodajCvor(cvor);
+    if(ModelCvorovi != NULL)
+        ModelCvorovi->dodajCvor(cvor);
 
     ui->labelAktivnihCvorova->setText(QString("Aktivnih čvorova: ")+QString::number(ModelCvorovi->rowCount()));
 }

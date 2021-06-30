@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1275</width>
-    <height>946</height>
+    <width>1395</width>
+    <height>1056</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -104,36 +104,36 @@
      <rect>
       <x>30</x>
       <y>480</y>
-      <width>1201</width>
-      <height>441</height>
+      <width>1271</width>
+      <height>551</height>
      </rect>
     </property>
     <property name="title">
      <string>Statistika</string>
     </property>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>680</x>
-       <y>20</y>
-       <width>67</width>
-       <height>19</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Broj paketa po čvoru</string>
-     </property>
-    </widget>
-    <widget class="QTableView" name="tableBrojPaketa">
-     <property name="geometry">
-      <rect>
-       <x>680</x>
-       <y>40</y>
-       <width>471</width>
-       <height>181</height>
-      </rect>
-     </property>
-    </widget>
+   </widget>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>150</y>
+      <width>67</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Broj paketa po čvoru</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableBrojPaketa">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>180</y>
+      <width>601</width>
+      <height>271</height>
+     </rect>
+    </property>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>

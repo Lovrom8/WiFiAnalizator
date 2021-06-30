@@ -107,12 +107,13 @@ public:
         paketi.push_back(new MgmtPaket("Action", 0b11010000));
         paketi.push_back(new MgmtPaket("Action No Ack", 0b11100000));
 
-        /* CONTROL */ // Izvađeno iz 802.11-2021.pdf
+        /* CONTROL */ // Izvađeno iz 802.11-2012.pdf
         paketi.push_back(new ControlPaket("Trigger", 0b00100100, AdrPolja(Ima, Ima, Nema, Nema))); // https://www.semfionetworks.com/blog/the-80211ax-trigger-frame
         //paketi.push_back(ControlPaket("TACK", 0b00110100, AdrPolja()));
         paketi.push_back(new ControlPaket("Beamforming Report Poll", 0b01000100, AdrPolja(Ima, Ima, Nema, Nema))); // https://www.hindawi.com/journals/tswj/2014/920937/
         paketi.push_back(new ControlPaket("VHT/HE NDP Announcement", 0b01010100, AdrPolja(Ima, Ima, Nema, Nema)));
         //paketi.push_back(ControlPaket("Control Frame Extension", 0b01100100, AdrPolja()));
+        paketi.push_back(new ControlPaket("Block ACK Req", 0b10000100, AdrPolja(Ima, Ima, Nema, Nema)));
         paketi.push_back(new ControlPaket("Block ACK", 0b10010100, AdrPolja(Ima, Ima, Nema, Nema)));
         paketi.push_back(new ControlPaket("Control Wrapper", 0b01110100, AdrPolja(Ima, Nema, Nema, Nema)));
         paketi.push_back(new ControlPaket("CTS", 0b11000100, AdrPolja(Ima, Nema, Nema, Nema)));
@@ -121,8 +122,6 @@ public:
         paketi.push_back(new ControlPaket("CF-End", 0b11100100, AdrPolja(Ima, Ima, Nema, Nema)));
         paketi.push_back(new ControlPaket("CF-End + CF-ACK", 0b11110100, AdrPolja(Ima, Ima, Nema, Nema)));
         paketi.push_back(new ControlPaket("PS-Poll", 0b10100100, AdrPolja(Ima, Ima, Nema, Nema)));
-        paketi.push_back(new ControlPaket("BlockAckReq", 0b01110100, AdrPolja(Ima, Ima, Nema, Nema)));
-        paketi.push_back(new ControlPaket("BlockAck", 0b10010100, AdrPolja(Ima, Ima, Nema, Nema)));
 
         /* DATA */
         paketi.push_back(new DataPaket("Data", 0b00001000));

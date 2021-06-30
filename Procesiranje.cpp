@@ -165,13 +165,6 @@ Paket* OdrediVrstu(unsigned char* bytes) {
 
     unsigned char* pom = bytes + OdrediDuljinuRT(bytes);
     int tip = pom[0];
-    /* for (Paket paket : vrstePaketa) {
-            if (paket.Tip == tip) {
-                //std::cout << paket.Naziv << std::endl;
-                qDebug() << paket.Naziv.c_str();
-                return paket;
-            }
-        }*/
 
     auto paket = std::find_if(std::begin(vrstePaketa), std::end(vrstePaketa), [&](Paket* paket) { return (*paket).Tip == tip; });
 
@@ -181,6 +174,7 @@ Paket* OdrediVrstu(unsigned char* bytes) {
     }
     else
     {
+        qDebug() << bin << tip;
         paket =  std::find_if(std::begin(vrstePaketa), std::end(vrstePaketa), [&](Paket* paket) { return (*paket).Vrsta == "Nedefiniran"; });
         return *paket;
     }

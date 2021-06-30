@@ -60,8 +60,12 @@ private:
     QChart *chart;
     QBarSeries *series;
 
-    void OsvjeziGraf(const std::vector<Okvir> &_okviri);
-    void OsvjeziPromet(const std::vector<Okvir> &_okviri);
+    QLineSeries *seriesJacine;
+    QChartView *chartViewJacine;
+    QChart *chartJacine;
+
+    void OsvjeziGrafVrste(const std::vector<Okvir> &_okviri);
+    void OsvjeziGrafJacine(const std::vector<Okvir> &_okviri);
 };
 
 #endif // PROZORANALIZA_H

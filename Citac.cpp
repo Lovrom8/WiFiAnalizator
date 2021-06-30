@@ -122,8 +122,8 @@ QString Citac::DodajMAC(MACNiz MAC) {
         emit noviCvor(cvor);
         emitted++;
 
-        qDebug() << "Emmited. ";
-        qDebug() << emitted << " " << MACAdr.size();
+        //qDebug() << "Emmited. ";
+        //qDebug() << emitted << " " << MACAdr.size();
     }
 
     return adresa;
@@ -196,26 +196,7 @@ void Citac::DretvaSlusatelj(int rawSocket){
             emit noviOkvir(okvir);
             sviOkviri.push_back(okvir);
         }
-        // std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
-}
-
-
-void Citac::DretvaCitatelj(){
-    /* while(true) {
-                mutex.lock();
-                if (numUsedBytes == 0)
-                    bufferNotEmpty.wait(&mutex);
-                mutex.unlock();
-
-                fprintf(stderr, "%c", buffer[i % BufferSize]);
-
-                mutex.lock();
-                --numUsedBytes;
-                bufferNotFull.wakeAll();
-                mutex.unlock();
-
-            }*/
 }
 
 void Citac::PokreniCitanjePrometa(QString nazivSucelja) {
